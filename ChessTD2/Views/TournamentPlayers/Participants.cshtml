@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ChessTD2.Models.Player>
+﻿@model ChessTD2.Controllers.ParticipantsViewModel
 
 @{
     ViewBag.Title = "Participants";
@@ -12,18 +12,18 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.FirstName)
+            First Name
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.LastName)
+            Last Name
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Rating)
+            Rating
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.Participants) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.FirstName)
@@ -36,9 +36,25 @@
         </td>
         <td>
             @Html.ActionLink("Details", "Details", "Player", new { id=item.PlayerID }, null) |
-            @Html.ActionLink("Remove from Tournament", "Remove", new { playerID=item.PlayerID, tournamentID=ViewData["tournamentID"] })
+            @Html.ActionLink("Remove from Tournament", "Remove", new { playerID=item.PlayerID, tournamentID=Model.TournamentID })
         </td>
     </tr>
 }
 
 </table>
+
+<form action="/TournamentPlayers/Add" method="post">
+
+    <input type="hidden" value="@Model.TournamentID" name="tournamentID"/>
+    <select name="playerID">
+        @foreach (var np in Model.NonParticipants)
+        {
+            <option value="@np.PlayerID">
+                @np.FirstName @np.LastName
+            </option>
+        }
+    </select>
+
+    <input type="submit" value="Add" />
+
+</form>
