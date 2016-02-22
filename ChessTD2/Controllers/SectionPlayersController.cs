@@ -17,7 +17,7 @@ namespace ChessTD2.Controllers
         public ICollection<Player> NonParticipants { get; set; }
         public int TournamentID { get; set; }
     }
-    public class TournamentPlayersController : Controller
+    public class SectionPlayersController : Controller
     {
         private TDContext db = new TDContext();
 
@@ -55,7 +55,7 @@ namespace ChessTD2.Controllers
             var player = db.Players.Find(playerID);
             //db.Tournaments.Include(p=>p.Players).Where(t => t.TournamentID == tournamentID).First().Players.Remove(player);
             db.SaveChanges();
-            return RedirectToAction(nameof(TournamentPlayersController.Participants), new { id = tournamentID });
+            return RedirectToAction(nameof(SectionPlayersController.Participants), new { id = tournamentID });
         }
 
         public ActionResult Add(int playerID, int tournamentID)
@@ -63,7 +63,7 @@ namespace ChessTD2.Controllers
             var player = db.Players.Find(playerID);
             //db.Tournaments.Include(p => p.Players).Where(t => t.TournamentID == tournamentID).First().Players.Add(player);
             db.SaveChanges();
-            return RedirectToAction(nameof(TournamentPlayersController.Participants), new { id = tournamentID });
+            return RedirectToAction(nameof(SectionPlayersController.Participants), new { id = tournamentID });
         }
         
         protected override void Dispose(bool disposing)

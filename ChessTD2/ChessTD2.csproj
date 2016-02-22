@@ -131,7 +131,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PlayerController.cs" />
     <Compile Include="Controllers\TournamentController.cs" />
-    <Compile Include="Controllers\TournamentPlayersController.cs" />
+    <Compile Include="Controllers\SectionPlayersController.cs" />
     <Compile Include="DAL\TDContext.cs" />
     <Compile Include="DAL\TDInitializer.cs" />
     <Compile Include="Global.asax.cs">
