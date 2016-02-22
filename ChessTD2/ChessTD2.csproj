@@ -145,8 +145,13 @@
     <Compile Include="Migrations\201602141933400_mystery.Designer.cs">
       <DependentUpon>201602141933400_mystery.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201602222239128_addSection.cs" />
+    <Compile Include="Migrations\201602222239128_addSection.Designer.cs">
+      <DependentUpon>201602222239128_addSection.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Player.cs" />
+    <Compile Include="Models\Section.cs" />
     <Compile Include="Models\Tournament.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -214,6 +219,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201602141933400_mystery.resx">
       <DependentUpon>201602141933400_mystery.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602222239128_addSection.resx">
+      <DependentUpon>201602222239128_addSection.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
