@@ -27,7 +27,7 @@ namespace ChessTD2.DAL
             context.SaveChanges();
 
             var Tournaments = new List<Tournament>{
-                new Tournament {Name="Open 2016", Players=Players }
+                //new Tournament {Name="Open 2016", Players=Players }
             };
 
             Tournaments.ForEach(t => context.Tournaments.Add(t));

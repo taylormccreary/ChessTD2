@@ -12,7 +12,7 @@ namespace ChessTD2.Models
         public string LastName { get; set; }
         public int Rating { get; set; }
 
-        public virtual ICollection<Tournament> Tournaments { get; set; }
+        //public virtual ICollection<Tournament> Tournaments { get; set; }
         public virtual ICollection<Section> Sections { get; set; }
     }
 }

@@ -10,6 +10,7 @@ namespace ChessTD2.Models
         public int TournamentID { get; set; }
         public string Name { get; set; }
 
-        public virtual ICollection<Player> Players { get; set; }
+        //public virtual ICollection<Player> Players { get; set; }
+        public virtual ICollection<Section> Sections { get; set; }
     }
 }

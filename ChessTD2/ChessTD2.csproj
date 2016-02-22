@@ -149,6 +149,10 @@
     <Compile Include="Migrations\201602222239128_addSection.Designer.cs">
       <DependentUpon>201602222239128_addSection.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201602222255549_relatesTournamentToSections.cs" />
+    <Compile Include="Migrations\201602222255549_relatesTournamentToSections.Designer.cs">
+      <DependentUpon>201602222255549_relatesTournamentToSections.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Player.cs" />
     <Compile Include="Models\Section.cs" />
@@ -222,6 +226,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201602222239128_addSection.resx">
       <DependentUpon>201602222239128_addSection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602222255549_relatesTournamentToSections.resx">
+      <DependentUpon>201602222255549_relatesTournamentToSections.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

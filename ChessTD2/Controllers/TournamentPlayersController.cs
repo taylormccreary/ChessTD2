@@ -25,7 +25,7 @@ namespace ChessTD2.Controllers
         {
             var vm = new ParticipantsViewModel();
             vm.TournamentID = id;
-            vm.Participants = db.Tournaments.Where(t => t.TournamentID == id).First().Players.OrderBy(p=>p.LastName).ToList();
+            //vm.Participants = db.Tournaments.Where(t => t.TournamentID == id).First().Players.OrderBy(p=>p.LastName).ToList();
 
             var participantIds = vm.Participants.Select(p => p.PlayerID).ToArray();
             vm.NonParticipants = db.Players.Where(np => !participantIds.Contains(np.PlayerID)).OrderBy(np=>np.LastName).ToList();
@@ -53,7 +53,7 @@ namespace ChessTD2.Controllers
         public ActionResult Remove(int playerID, int tournamentID)
         {
             var player = db.Players.Find(playerID);
-            db.Tournaments.Include(p=>p.Players).Where(t => t.TournamentID == tournamentID).First().Players.Remove(player);
+            //db.Tournaments.Include(p=>p.Players).Where(t => t.TournamentID == tournamentID).First().Players.Remove(player);
             db.SaveChanges();
             return RedirectToAction(nameof(TournamentPlayersController.Participants), new { id = tournamentID });
         }
@@ -61,7 +61,7 @@ namespace ChessTD2.Controllers
         public ActionResult Add(int playerID, int tournamentID)
         {
             var player = db.Players.Find(playerID);
-            db.Tournaments.Include(p => p.Players).Where(t => t.TournamentID == tournamentID).First().Players.Add(player);
+            //db.Tournaments.Include(p => p.Players).Where(t => t.TournamentID == tournamentID).First().Players.Add(player);
             db.SaveChanges();
             return RedirectToAction(nameof(TournamentPlayersController.Participants), new { id = tournamentID });
         }
