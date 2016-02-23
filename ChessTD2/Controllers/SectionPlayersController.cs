@@ -16,16 +16,18 @@ namespace ChessTD2.Controllers
         public ICollection<Player> Participants { get; set; }
         public ICollection<Player> NonParticipants { get; set; }
         public int TournamentID { get; set; }
+        public int SectionID { get; set; }
     }
     public class SectionPlayersController : Controller
     {
         private TDContext db = new TDContext();
 
-        public ActionResult Participants(int id)
+        public ActionResult Participants(int tId, int sId)
         {
             var vm = new ParticipantsViewModel();
-            vm.TournamentID = id;
-            //vm.Participants = db.Tournaments.Where(t => t.TournamentID == id).First().Players.OrderBy(p=>p.LastName).ToList();
+            vm.SectionID = sId;
+            vm.TournamentID = tId;
+            vm.Participants = db.Tournaments.Where(t => t.TournamentID == tId).First().Sections.Where(s=>s.SectionID== sId).First().Players.OrderBy(p=>p.LastName).ToList();
 
             var participantIds = vm.Participants.Select(p => p.PlayerID).ToArray();
             vm.NonParticipants = db.Players.Where(np => !participantIds.Contains(np.PlayerID)).OrderBy(np=>np.LastName).ToList();

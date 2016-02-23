@@ -18,5 +18,6 @@ namespace ChessTD2.DAL
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
 
+        public System.Data.Entity.DbSet<ChessTD2.Models.Section> Sections { get; set; }
     }
 }

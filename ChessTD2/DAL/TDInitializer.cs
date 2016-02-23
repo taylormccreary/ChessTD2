@@ -7,11 +7,11 @@ using ChessTD2.Models;
 
 namespace ChessTD2.DAL
 {
-    public class TDInitializer: System.Data.Entity.DropCreateDatabaseIfModelChanges<TDContext>
+    public class TDInitializer: System.Data.Entity.DropCreateDatabaseAlways<TDContext>
     {
         protected override void Seed(TDContext context)
         {
-            var Players = new List<Player>
+            var OpenPlayers = new List<Player>
             {
             new Player{FirstName="Carson",LastName="Alexander",Rating=1000},
             new Player{FirstName="Meredith",LastName="Alonso",Rating=1000},
@@ -23,11 +23,17 @@ namespace ChessTD2.DAL
             new Player{FirstName="Nino",LastName="Olivetto",Rating=1000}
             };
 
-            Players.ForEach(p => context.Players.Add(p));
+            OpenPlayers.ForEach(p => context.Players.Add(p));
             context.SaveChanges();
 
-            var Tournaments = new List<Tournament>{
-                //new Tournament {Name="Open 2016", Players=Players }
+            var Secs = new List<Section>
+            {
+                new Section {Name="Open",Players=OpenPlayers }
+            };
+
+            var Tournaments = new List<Tournament>
+            {
+                new Tournament {Name = "Championship 2016", Sections = Secs }
             };
 
             Tournaments.ForEach(t => context.Tournaments.Add(t));
