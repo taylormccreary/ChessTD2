@@ -159,7 +159,9 @@
       <DependentUpon>201602230308055_miscChanges.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Pairing.cs" />
     <Compile Include="Models\Player.cs" />
+    <Compile Include="Models\Round.cs" />
     <Compile Include="Models\Section.cs" />
     <Compile Include="Models\Tournament.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
