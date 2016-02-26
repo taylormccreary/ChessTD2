@@ -7,7 +7,7 @@ using ChessTD2.Models;
 
 namespace ChessTD2.DAL
 {
-    public class TDInitializer: System.Data.Entity.DropCreateDatabaseAlways<TDContext>
+    public class TDInitializer: System.Data.Entity.DropCreateDatabaseIfModelChanges<TDContext>
     {
         protected override void Seed(TDContext context)
         {
