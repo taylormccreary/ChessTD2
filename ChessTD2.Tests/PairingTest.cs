@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ChessTD2.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,85 +6,127 @@ using System.Linq;
 namespace ChessTD2.Tests
 {
     [TestClass]
-    public class PairingTest
+    public class SectionTest
     {
         [TestMethod]
-        public void TestMethod1()
+        public void calculateScoreAndOpponents()
         {
-            // arrange
-            var player1 = new Player { FirstName = "Taylor", LastName = "McCreary", PlayerID = 1, Rating = 2000 };
-            var player2 = new Player { FirstName = "Michael", LastName = "McCreary", PlayerID = 2, Rating = 900 };
-            var round1 = new Round { Number = 1, RoundID = 1, Pairings = new List<Pairing>() };
-            var pairing1 = new Pairing { White = player1, Black = player2, PairingID = 1, Result = PairingResult.WhiteWins };
-            round1.Pairings.Add(pairing1);
-            var round2 = new Round { Number = 2, RoundID = 2 };
-            var pairing2 = new Pairing { White = player2, Black = player1, PairingID = 2, Result = PairingResult.Draw };
-            var players = new List<Player> { player1, player2 };
-            var section1 = new Section { Name = "championship", SectionID = 1, Players = players, Rounds = new List<Round> { round1, round2 } };
 
-            // act
+            // Arrange
 
-            var allRounds = section1.Rounds;
+            var section = GetSection();
 
-            // assert
-            Assert.AreEqual(expected: 2, actual: players.Count);
-            Assert.AreEqual(2, section1.Rounds.Count);
+
+            // Act
+            // players with score and opponents
+            var players2 =
+                from p in section.Players
+                select new SectionPlayerForPairing
+                {
+                    Player = p,
+                    Score =
+                        (
+                        from ro in section.Rounds
+                        from pr in ro.Pairings
+                        where pr.Black == p || pr.White == p
+                        select
+                        ((pr.Black == p && pr.Result == PairingResult.BlackWins) || (pr.White == p && pr.Result == PairingResult.WhiteWins)) ? 1 :
+                        pr.Result == PairingResult.Draw && (pr.Black == p || pr.White == p) ? 0.5 : 0
+                        ).Sum(),
+                    Opponents =
+                        (
+                        from ro in section.Rounds
+                        from pr in ro.Pairings
+                        where pr.Black == p || pr.White == p
+                        select pr.Black == p ? pr.White.PlayerID : pr.Black.PlayerID
+                        ) //.Distinct()
+                };
+
+            var playerCount = players2.Count();
+
+            // Assert
+
+            // checking scores
+            Assert.AreEqual(2.5, players2.First().Score);
+            Assert.AreEqual(1.5, players2.ElementAt(1).Score);
+            Assert.AreEqual(4, players2.ElementAt(2).Score);
+            Assert.AreEqual(0, players2.ElementAt(3).Score);
+
+            // checking opponents of player1
+            Assert.AreEqual(101, players2.First().Opponents.First());
+            Assert.AreEqual(103, players2.First().Opponents.ElementAt(1));
+            Assert.AreEqual(102, players2.First().Opponents.ElementAt(2));
+            Assert.AreEqual(101, players2.First().Opponents.ElementAt(3));
         }
 
-        [TestMethod]
-        public void TestMethod2()
+
+        public Section GetSection()
         {
-            var champ = new SectionPlayers
+            var player1 = new Player { PlayerID = 100, FirstName = "Taylor", LastName = "McCreary", Rating = 2000 };
+            var player2 = new Player { PlayerID = 101, FirstName = "Michael", LastName = "McCreary", Rating = 900 };
+            var player3 = new Player { PlayerID = 102, FirstName = "Debbie", LastName = "McCreary", Rating = 600 };
+            var player4 = new Player { PlayerID = 103, FirstName = "Shannyn", LastName = "McCreary", Rating = 800 };
+            var player5 = new Player { PlayerID = 104, FirstName = "Lily", Rating = 200 };
+
+            return
+            new Section
             {
-                Players = new List<SectionPlayer>
+                Name = "championship",
+                SectionID = 1,
+                Players = new List<Player> { player1, player2, player3, player4, player5 },
+                Rounds = new List<Round>
                 {
-                    new SectionPlayer
+                    new Round
                     {
-                        Player=new Player { FirstName = "Taylor", LastName = "McCreary", Rating = 2000, PlayerID = 1 },
-                        Score=0
+                     Number = 1,
+                     Pairings = new List<Pairing>
+                     {
+                      new Pairing { White = player1, Black = player2, Result = PairingResult.Draw },
+                      new Pairing { White = player3, Black = player4, Result = PairingResult.WhiteWins }
+                     }
                     },
-                    new SectionPlayer
+
+                    new Round
                     {
-                        Player=new Player { FirstName = "Michael", LastName = "McCreary", Rating = 1000, PlayerID = 2 },
-                        Score=0
+                     Number = 2,
+                     Pairings = new List<Pairing>
+                     {
+                      new Pairing { White = player3, Black = player2, Result = PairingResult.WhiteWins },
+                      new Pairing { White = player4, Black = player1, Result = PairingResult.BlackWins }
+                     }
                     },
-                    new SectionPlayer
+
+                    new Round
                     {
-                        Player=new Player { FirstName = "Ethan", LastName = "McSwain", Rating = 1000, PlayerID = 3 },
-                        Score=0
+                     Number = 3,
+                     Pairings = new List<Pairing>
+                     {
+                      new Pairing { White = player1, Black = player3, Result = PairingResult.BlackWins },
+                      new Pairing { White = player2, Black = player4, Result = PairingResult.WhiteWins }
+                     }
                     },
-                    new SectionPlayer
+
+                    new Round
                     {
-                        Player=new Player { FirstName = "Tanner", LastName = "Begin", Rating = 800, PlayerID = 4 },
-                        Score=0
-                    },
-                    new SectionPlayer
-                    {
-                        Player=new Player { FirstName = "Mark", LastName = "Keller", Rating = 1600, PlayerID = 5 },
-                        Score=0
-                    },
-                    new SectionPlayer
-                    {
-                        Player=new Player { FirstName = "Magnus", LastName = "Carlsen", Rating = 2850, PlayerID = 6 },
-                        Score=0
+                     Number = 4,
+                     Pairings = new List<Pairing>
+                     {
+                      new Pairing { White = player4, Black = player3, Result = PairingResult.BlackWins },
+                      new Pairing { White = player2, Black = player1, Result = PairingResult.BlackWins }
+                     }
                     }
                 }
             };
-
-            Assert.Fail();
         }
     }
 
-    public class SectionPlayer
+    public class SectionPlayerForPairing
     {
         public Player Player { get; set; }
-        public int PlayerID { get; set; }
         public double Score { get; set; }
-        public ICollection<int> OpponentIDs { get; set; }
-    }
-
-    public class SectionPlayers
-    {
-        public ICollection<SectionPlayer> Players { get; set; }
+        //public int[] Opponents { get; set; }
+        public IEnumerable<int> Opponents { get; set; }
+        public ICollection<Player> Preferences { get; set; }
     }
 }
+
