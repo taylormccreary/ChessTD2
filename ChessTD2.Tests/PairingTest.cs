@@ -33,7 +33,7 @@ namespace ChessTD2.Tests
                         ((pr.Black == p && pr.Result == PairingResult.BlackWins) || (pr.White == p && pr.Result == PairingResult.WhiteWins)) ? 1 :
                         pr.Result == PairingResult.Draw && (pr.Black == p || pr.White == p) ? 0.5 : 0
                         ).Sum(),
-                    Opponents =
+                    OpponentIDs =
                         (
                         from ro in section.Rounds
                         from pr in ro.Pairings
@@ -53,10 +53,10 @@ namespace ChessTD2.Tests
             Assert.AreEqual(0, players2.ElementAt(3).Score);
 
             // checking opponents of player1
-            Assert.AreEqual(101, players2.First().Opponents.First());
-            Assert.AreEqual(103, players2.First().Opponents.ElementAt(1));
-            Assert.AreEqual(102, players2.First().Opponents.ElementAt(2));
-            Assert.AreEqual(101, players2.First().Opponents.ElementAt(3));
+            Assert.AreEqual(101, players2.First().OpponentIDs.First());
+            Assert.AreEqual(103, players2.First().OpponentIDs.ElementAt(1));
+            Assert.AreEqual(102, players2.First().OpponentIDs.ElementAt(2));
+            Assert.AreEqual(101, players2.First().OpponentIDs.ElementAt(3));
         }
 
 
@@ -125,7 +125,7 @@ namespace ChessTD2.Tests
         public Player Player { get; set; }
         public double Score { get; set; }
         //public int[] Opponents { get; set; }
-        public IEnumerable<int> Opponents { get; set; }
+        public IEnumerable<int> OpponentIDs { get; set; }
         public ICollection<Player> Preferences { get; set; }
     }
 }
