@@ -18,7 +18,9 @@ namespace ChessTD2.Controllers
         // GET: Section
         public ActionResult Index(int id)
         {
-            return View(db.Tournaments.Where(t=>t.TournamentID==id).First().Sections.ToList());
+            //return View(db.Tournaments.Where(t=>t.TournamentID==id).First().Sections.ToList());
+            return View(db.Sections.ToList());
+
         }
 
         // GET: Section/Details/5
@@ -53,7 +55,7 @@ namespace ChessTD2.Controllers
             {
                 db.Sections.Add(section);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { id = 1 });
             }
 
             return View(section);
