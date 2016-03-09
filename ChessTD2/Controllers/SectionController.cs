@@ -49,11 +49,13 @@ namespace ChessTD2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "SectionID,Name")] Section section)
+        public ActionResult Create([Bind(Include = "SectionID,Name")] Section section, int tID)
         {
             if (ModelState.IsValid)
             {
-                db.Sections.Add(section);
+                
+                db.Tournaments.Where(t => t.TournamentID == tID).First().Sections.Add(section);
+                //db.Sections.Add(section);
                 db.SaveChanges();
                 return RedirectToAction("Index", new { id = 1 });
             }
