@@ -7,7 +7,7 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", new { tID = (Model.Count() > 0) ? Model.First().Tournament.TournamentID : 1 })
 </p>
 <table class="table">
     <tr>
