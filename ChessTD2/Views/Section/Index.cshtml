@@ -1,5 +1,4 @@
-﻿@*@model IEnumerable<ChessTD2.Models.Section>*@
-@model ChessTD2.Models.Tournament
+﻿@model ChessTD2.Models.Tournament
 
 @{
     ViewBag.Title = "Index";
@@ -8,7 +7,6 @@
 <h2>Index</h2>
 
 <p>
-    @*@Html.ActionLink("Create New", "Create", new { tID = (Model.Count() > 0) ? Model.First().Tournament.TournamentID : 1 })*@
     @Html.ActionLink("Create New", "Create", new { tID = Model.TournamentID })
 
 
