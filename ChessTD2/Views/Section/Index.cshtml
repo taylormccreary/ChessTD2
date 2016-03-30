@@ -1,4 +1,5 @@
-﻿@model IEnumerable<ChessTD2.Models.Section>
+﻿@*@model IEnumerable<ChessTD2.Models.Section>*@
+@model ChessTD2.Models.Tournament
 
 @{
     ViewBag.Title = "Index";
@@ -7,7 +8,10 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create", new { tID = (Model.Count() > 0) ? Model.First().Tournament.TournamentID : 1 })
+    @*@Html.ActionLink("Create New", "Create", new { tID = (Model.Count() > 0) ? Model.First().Tournament.TournamentID : 1 })*@
+    @Html.ActionLink("Create New", "Create", new { tID = Model.TournamentID })
+
+
 </p>
 <table class="table">
     <tr>
@@ -17,7 +21,7 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.Sections) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
