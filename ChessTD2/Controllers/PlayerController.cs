@@ -20,7 +20,7 @@ namespace ChessTD2.Controllers
         {
             return View(db.Players.ToList());
         }
-
+         
         // GET: Player/Details/5
         public ActionResult Details(int? id)
         {
