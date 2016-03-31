@@ -159,7 +159,9 @@
       <DependentUpon>201602230308055_miscChanges.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Pairing.cs" />
     <Compile Include="Models\Player.cs" />
+    <Compile Include="Models\Round.cs" />
     <Compile Include="Models\Section.cs" />
     <Compile Include="Models\Tournament.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -214,7 +216,7 @@
     <Content Include="Views\Section\Delete.cshtml" />
     <Content Include="Views\Section\Details.cshtml" />
     <Content Include="Views\Section\Edit.cshtml" />
-    <Content Include="Views\Section\Index.cshtml" />
+    <Content Include="Views\Section\SectionList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
