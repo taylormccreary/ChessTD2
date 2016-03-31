@@ -22,6 +22,11 @@ namespace ChessTD2.Controllers
 
         }
 
+        public ActionResult SectionList(int id)
+        {
+            return View(db.Tournaments.Where(t => t.TournamentID == id).First());
+        }
+
         // GET: Section/Details/5
         public ActionResult Details(int? id)
         {
