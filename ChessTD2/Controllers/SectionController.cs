@@ -61,7 +61,7 @@ namespace ChessTD2.Controllers
                 db.Tournaments.Where(t => t.TournamentID == tID).First().Sections.Add(section);
                 //db.Sections.Add(section);
                 db.SaveChanges();
-                return RedirectToAction("Index", new { id = tID });
+                return RedirectToAction("SectionList", new { id = tID });
             }
 
             return View(section);

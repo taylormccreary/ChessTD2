@@ -216,7 +216,6 @@
     <Content Include="Views\Section\Delete.cshtml" />
     <Content Include="Views\Section\Details.cshtml" />
     <Content Include="Views\Section\Edit.cshtml" />
-    <Content Include="Views\Section\Index.cshtml" />
     <Content Include="Views\Section\SectionList.cshtml" />
   </ItemGroup>
   <ItemGroup>
