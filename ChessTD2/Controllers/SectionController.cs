@@ -14,13 +14,7 @@ namespace ChessTD2.Controllers
     public class SectionController : Controller
     {
         private TDContext db = new TDContext();
-
-        // GET: Section
-        public ActionResult Index(int id)
-        {
-            return View(db.Tournaments.Where(t => t.TournamentID == id).First());
-
-        }
+        
 
         public ActionResult SectionList(int id)
         {
@@ -57,7 +51,7 @@ namespace ChessTD2.Controllers
         {
             if (ModelState.IsValid)
             {
-                
+                section.Tournament = db.Tournaments.Where(t => t.TournamentID == tID).First();
                 db.Tournaments.Where(t => t.TournamentID == tID).First().Sections.Add(section);
                 //db.Sections.Add(section);
                 db.SaveChanges();
@@ -74,6 +68,7 @@ namespace ChessTD2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            // we should be finding the section within its tournament
             Section section = db.Sections.Find(id);
             if (section == null)
             {
@@ -87,13 +82,14 @@ namespace ChessTD2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "SectionID,Name")] Section section)
+        public ActionResult Edit([Bind(Include = "SectionID,Name,Tournament")] Section section)
         {
+            //right now at this point section does not have a tournament
             if (ModelState.IsValid)
             {
                 db.Entry(section).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("SectionList", new { id = section.Tournament.TournamentID });
             }
             return View(section);
         }
