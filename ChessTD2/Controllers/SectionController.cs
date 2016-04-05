@@ -62,14 +62,14 @@ namespace ChessTD2.Controllers
         }
 
         // GET: Section/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? sId, int? tId)
         {
-            if (id == null)
+            if (sId == null || tId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             // we should be finding the section within its tournament
-            Section section = db.Sections.Find(id);
+            Section section = db.Tournaments.Find(tId).Sections.Where(s => s.SectionID == sId).First();
             if (section == null)
             {
                 return HttpNotFound();
