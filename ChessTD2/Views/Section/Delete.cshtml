@@ -24,6 +24,9 @@
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
+        @Html.HiddenFor(model => model.SectionID)
+        @Html.HiddenFor(model => model.Tournament.TournamentID)
+
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> |
             @Html.ActionLink("Back to List", "Index")

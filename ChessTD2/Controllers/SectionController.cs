@@ -115,12 +115,12 @@ namespace ChessTD2.Controllers
         // POST: Section/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int? sId)
+        public ActionResult DeleteConfirmed([Bind(Include = "SectionID,Tournament")] Section section)
         {
-            Section section = db.Sections.Find(sId);
-            db.Sections.Remove(section);
+            //Section section = db.Sections.Find(sId);
+            db.Sections.Remove(db.Sections.Where(s=>s.SectionID == section.SectionID).First());
             db.SaveChanges();
-            return RedirectToAction("SectionList");
+            return RedirectToAction("SectionList", new { id = section.Tournament.TournamentID });
         }
 
         protected override void Dispose(bool disposing)
