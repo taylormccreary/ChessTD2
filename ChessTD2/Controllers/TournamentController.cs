@@ -111,6 +111,10 @@ namespace ChessTD2.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Tournament tournament = db.Tournaments.Find(id);
+            foreach(Section s in db.Sections.Where(s => s.Tournament.TournamentID == tournament.TournamentID))
+            {
+                db.Sections.Remove(s);
+            }
             db.Tournaments.Remove(tournament);
             db.SaveChanges();
             return RedirectToAction("Index");
