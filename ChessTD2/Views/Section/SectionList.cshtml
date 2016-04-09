@@ -28,7 +28,7 @@
             <td>
                 @Html.ActionLink("Edit", "Edit", new { sId = item.SectionID, tId = Model.TournamentID}) |
                 @Html.ActionLink("Details", "Details", new { id = item.SectionID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.SectionID })
+                @Html.ActionLink("Delete", "Delete", new { sId = item.SectionID, tId = Model.TournamentID })
             </td>
         </tr>
     }

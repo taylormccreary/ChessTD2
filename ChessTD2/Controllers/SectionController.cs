@@ -68,8 +68,9 @@ namespace ChessTD2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            // we should be finding the section within its tournament
+
             Section section = db.Tournaments.Find(tId).Sections.Where(s => s.SectionID == sId).First();
+
             if (section == null)
             {
                 return HttpNotFound();
@@ -84,7 +85,7 @@ namespace ChessTD2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "SectionID,Name,Tournament")] Section section)
         {
-            //right now at this point section does not have a tournament
+
             if (ModelState.IsValid)
             {
                 db.Entry(section).State = EntityState.Modified;
@@ -95,13 +96,15 @@ namespace ChessTD2.Controllers
         }
 
         // GET: Section/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? sId, int? tId)
         {
-            if (id == null)
+            if (sId == null || tId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Section section = db.Sections.Find(id);
+
+            Section section = db.Tournaments.Find(tId).Sections.Where(s => s.SectionID == sId).First();
+
             if (section == null)
             {
                 return HttpNotFound();
@@ -112,12 +115,12 @@ namespace ChessTD2.Controllers
         // POST: Section/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed([Bind(Include = "SectionID,Tournament")] Section section)
         {
-            Section section = db.Sections.Find(id);
-            db.Sections.Remove(section);
+            //Section section = db.Sections.Find(sId);
+            db.Sections.Remove(db.Sections.Where(s=>s.SectionID == section.SectionID).First());
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("SectionList", new { id = section.Tournament.TournamentID });
         }
 
         protected override void Dispose(bool disposing)
@@ -128,5 +131,5 @@ namespace ChessTD2.Controllers
             }
             base.Dispose(disposing);
         }
-    }
+    }  
 }
