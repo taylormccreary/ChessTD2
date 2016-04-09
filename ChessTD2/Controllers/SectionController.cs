@@ -22,13 +22,15 @@ namespace ChessTD2.Controllers
         }
 
         // GET: Section/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? sId, int? tId)
         {
-            if (id == null)
+            if (sId == null || tId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Section section = db.Sections.Find(id);
+
+            Section section = db.Tournaments.Find(tId).Sections.Where(s => s.SectionID == sId).First();
+
             if (section == null)
             {
                 return HttpNotFound();
