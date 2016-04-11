@@ -35,7 +35,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "SectionList")
+    @Html.ActionLink("Back to List", "SectionList", new { id = Model.Tournament.TournamentID })
 </div>
 
 @section Scripts {

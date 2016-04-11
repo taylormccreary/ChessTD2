@@ -22,13 +22,15 @@ namespace ChessTD2.Controllers
         }
 
         // GET: Section/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? sId, int? tId)
         {
-            if (id == null)
+            if (sId == null || tId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Section section = db.Sections.Find(id);
+
+            Section section = db.Tournaments.Find(tId).Sections.Where(s => s.SectionID == sId).First();
+
             if (section == null)
             {
                 return HttpNotFound();
@@ -37,9 +39,11 @@ namespace ChessTD2.Controllers
         }
 
         // GET: Section/Create
-        public ActionResult Create()
+        public ActionResult Create(int tId)
         {
-            return View();
+            Section section = new Section();
+            section.Tournament = db.Tournaments.Find(tId);
+            return View(section);
         }
 
         // POST: Section/Create
@@ -53,7 +57,6 @@ namespace ChessTD2.Controllers
             {
                 section.Tournament = db.Tournaments.Where(t => t.TournamentID == tID).First();
                 db.Tournaments.Where(t => t.TournamentID == tID).First().Sections.Add(section);
-                //db.Sections.Add(section);
                 db.SaveChanges();
                 return RedirectToAction("SectionList", new { id = tID });
             }

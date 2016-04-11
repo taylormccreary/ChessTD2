@@ -22,5 +22,5 @@
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.SectionID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "SectionList", new { id = Model.Tournament.TournamentID })
 </p>
