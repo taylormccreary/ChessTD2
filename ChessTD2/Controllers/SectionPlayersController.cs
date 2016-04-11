@@ -22,7 +22,7 @@ namespace ChessTD2.Controllers
     {
         private TDContext db = new TDContext();
 
-        public ActionResult Participants(int tId, int sId)
+        public ActionResult Participants(int sId, int tId)
         {
             var vm = new ParticipantsViewModel();
             vm.SectionID = sId;
