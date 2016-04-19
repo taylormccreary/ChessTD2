@@ -43,9 +43,10 @@
 
 </table>
 
-<form action="/TournamentPlayers/Add" method="post">
+<form action="/SectionPlayers/Add" method="post">
 
-    <input type="hidden" value="@Model.TournamentID" name="tournamentID"/>
+    <input type="hidden" value="@Model.TournamentID" name="tId" />
+    <input type="hidden" value="@Model.SectionID" name="sId"/>
     <select name="playerID">
         @foreach (var np in Model.NonParticipants)
         {

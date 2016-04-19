@@ -35,6 +35,19 @@ namespace ChessTD2.Controllers
             return View(vm);
         }
 
+        // POST: SectionPlayers/Add
+        //[HttpPost, ActionName("Add")]
+        //[ValidateAntiForgeryToken]
+        public ActionResult Add(int tId, int sId, int playerID)
+        {
+            var section = db.Tournaments.Where(t => t.TournamentID == tId).First().Sections.Where(s => s.SectionID == sId).First();
+            var player = db.Players.Where(p => p.PlayerID == playerID).First();
+            section.Players.Add(player);
+            player.Sections.Add(section);
+            db.SaveChanges();
+            return RedirectToAction(nameof(SectionPlayersController.Participants), new { sId = sId, tId = tId });
+        }
+
 
         // GET: TournamentPlayers/Details/5
         public ActionResult Details(int? id)
@@ -60,13 +73,13 @@ namespace ChessTD2.Controllers
             return RedirectToAction(nameof(SectionPlayersController.Participants), new { id = tournamentID });
         }
 
-        public ActionResult Add(int playerID, int tournamentID)
-        {
-            var player = db.Players.Find(playerID);
-            //db.Tournaments.Include(p => p.Players).Where(t => t.TournamentID == tournamentID).First().Players.Add(player);
-            db.SaveChanges();
-            return RedirectToAction(nameof(SectionPlayersController.Participants), new { id = tournamentID });
-        }
+        //public ActionResult Add(int playerID, int tournamentID)
+        //{
+        //    var player = db.Players.Find(playerID);
+        //    //db.Tournaments.Include(p => p.Players).Where(t => t.TournamentID == tournamentID).First().Players.Add(player);
+        //    db.SaveChanges();
+        //    return RedirectToAction(nameof(SectionPlayersController.Participants), new { id = tournamentID });
+        //}
         
         protected override void Dispose(bool disposing)
         {
