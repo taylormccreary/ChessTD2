@@ -36,7 +36,7 @@
         </td>
         <td>
             @Html.ActionLink("Details", "Details", "Player", new { id=item.PlayerID }, null) |
-            @Html.ActionLink("Remove from Tournament", "Remove", new { playerID=item.PlayerID, tournamentID=Model.TournamentID })
+            @Html.ActionLink("Remove from Tournament", "Remove", new { tId = Model.TournamentID, sId = Model.SectionID, playerID = item.PlayerID })
         </td>
     </tr>
 }

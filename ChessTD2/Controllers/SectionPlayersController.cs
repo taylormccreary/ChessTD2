@@ -65,21 +65,17 @@ namespace ChessTD2.Controllers
         }
 
         
-        public ActionResult Remove(int playerID, int tournamentID)
+        public ActionResult Remove(int tId, int sId, int playerID)
         {
             var player = db.Players.Find(playerID);
             //db.Tournaments.Include(p=>p.Players).Where(t => t.TournamentID == tournamentID).First().Players.Remove(player);
+            var section = db.Tournaments.Where(t => t.TournamentID == tId).First().Sections.Where(s => s.SectionID == sId).First();
+            section.Players.Remove(player);
+            player.Sections.Remove(section);
             db.SaveChanges();
-            return RedirectToAction(nameof(SectionPlayersController.Participants), new { id = tournamentID });
+            return RedirectToAction(nameof(SectionPlayersController.Participants), new { sId = sId, tId = tId });
         }
-
-        //public ActionResult Add(int playerID, int tournamentID)
-        //{
-        //    var player = db.Players.Find(playerID);
-        //    //db.Tournaments.Include(p => p.Players).Where(t => t.TournamentID == tournamentID).First().Players.Add(player);
-        //    db.SaveChanges();
-        //    return RedirectToAction(nameof(SectionPlayersController.Participants), new { id = tournamentID });
-        //}
+        
         
         protected override void Dispose(bool disposing)
         {
