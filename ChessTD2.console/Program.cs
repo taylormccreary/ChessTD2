@@ -17,7 +17,23 @@ namespace ChessTD2.console
 				from p in GetPlayers()
 				where p.Rating > 100
 				orderby p.Rating descending
-				select p;
+				select new { name = p.FirstName, rating = p.Rating, fullName = p.FirstName + " " + p.LastName };
+
+			var players2 = 
+				GetPlayers()
+				.Where(p => p.Rating > 100)
+				.OrderByDescending(p => p.Rating)
+				.Select(p => p.FirstName);
+
+			var players3 =
+				from p in players
+				where p.rating > 600
+				select p.fullName;
+
+			double avgRating =
+				(from p in players
+				select p.rating).Sum()/players.Count();
+				
 
 			Console.WriteLine(players.Count());
 
