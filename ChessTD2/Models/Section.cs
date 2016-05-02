@@ -10,6 +10,7 @@ namespace ChessTD2.Models
         public int SectionID { get; set; }
         public string Name { get; set; }
 
+        public virtual ICollection<Round> Rounds { get; set; }
         public virtual ICollection<Player> Players { get; set; }
         //public virtual ICollection<Round> Rounds { get; set; }
         public Tournament Tournament { get; set; }
