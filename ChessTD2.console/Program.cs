@@ -26,13 +26,13 @@ namespace ChessTD2.console
 				.Select(p => p.FirstName);
 
 			var players3 =
-				from p in players
+				(from p in players
 				where p.rating > 600
-				select p.fullName;
+				select p.rating).Average();
 
 			double avgRating =
 				(from p in players
-				select p.rating).Sum()/players.Count();
+				select p.rating).Average();
 				
 
 			Console.WriteLine(players.Count());
