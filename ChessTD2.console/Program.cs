@@ -15,27 +15,24 @@ namespace ChessTD2.console
 
 			var players =
 				from p in GetPlayers()
-				where p.Rating > 100
 				orderby p.Rating descending
-				select new { name = p.FirstName, rating = p.Rating, fullName = p.FirstName + " " + p.LastName };
+				//select new { name = p.FirstName, rating = p.Rating, fullName = p.FirstName + " " + p.LastName };
+				select p;
 
-			var players2 = 
-				GetPlayers()
-				.Where(p => p.Rating > 100)
-				.OrderByDescending(p => p.Rating)
-				.Select(p => p.FirstName);
+			Section section = new Section { Name = "Test", Players = GetPlayers(), SectionID = 001 };
 
-			var players3 =
-				(from p in players
-				where p.rating > 600
-				select p.rating).Average();
+			section.Rounds = new List<Round> { new Round { RoundID = 001, Number = 1, Pairings = new List<Pairing> { } } };
+			
+			for (int i = 0; i < section.Players.Count() - 1; i += 2)
+			{
+				section.Rounds.First().Pairings.Add(new Pairing { White = section.Players.ElementAt(i), Black = section.Players.ElementAt(i + 1), PairingID = i / 2 });
+			}
+			
 
-			double avgRating =
-				(from p in players
-				select p.rating).Average();
-				
-
-			Console.WriteLine(players.Count());
+			for (int i = 0; i < section.Rounds.First().Pairings.Count(); i++)
+			{
+				Console.WriteLine(section.Rounds.First().Pairings.ElementAt(i).White.FirstName + " vs. " + section.Rounds.First().Pairings.ElementAt(i).Black.FirstName);
+			}
 
 			Console.ReadKey();
 		}
@@ -50,8 +47,9 @@ namespace ChessTD2.console
 			var player6 = new Player { PlayerID = 105, FirstName = "Matt", Rating = 1200 };
 			var player7 = new Player { PlayerID = 106, FirstName = "Sam", Rating = 1300 };
 			var player8 = new Player { PlayerID = 107, FirstName = "John", Rating = 1567 };
+			var player9 = new Player { PlayerID = 108, FirstName = "Ethan", LastName = "McSwain", Rating = 1100 };
 
-			return new List<Player> { player1, player2, player3, player4, player5, player6, player7, player8 };
+			return new List<Player> { player1, player2, player3, player4, player5, player6, player7, player8, player9 };
 		}
 
 		static Section GetSection()
