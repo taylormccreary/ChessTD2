@@ -1,6 +1,6 @@
 ﻿namespace ChessTD2.Models
 {
-    public enum PairingResult { WhiteWins, BlackWins, Draw}
+    public enum PairingResult { WhiteWins, BlackWins, Draw, NoResult}
     public class Pairing
     {
         public int PairingID { get; set; }

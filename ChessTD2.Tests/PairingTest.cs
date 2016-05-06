@@ -31,7 +31,7 @@ namespace ChessTD2.Tests
                         where pr.Black == p || pr.White == p
                         select
                         ((pr.Black == p && pr.Result == PairingResult.BlackWins) || (pr.White == p && pr.Result == PairingResult.WhiteWins)) ? 1 :
-                        pr.Result == PairingResult.Draw && (pr.Black == p || pr.White == p) ? 0.5 : 0
+                        pr.Result == PairingResult.Draw && (pr.Black == p || pr.White == p) ? 0.5 : pr.Result == PairingResult.NoResult ? -1 : 0
                         ).Sum(),
                     OpponentIDs =
                         (
