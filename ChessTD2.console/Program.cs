@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ChessTD2.Models;
 
 namespace ChessTD2.console
 {
-	class Program
+	public class Program
 	{
 		static void Main(string[] args)
 		{
@@ -23,14 +22,14 @@ namespace ChessTD2.console
 
 			for (int i = 0; i < section.Players.Count() - 1; i += 2)
 			{
-				section.Rounds.First().Pairings.Add(new Pairing { White = section.Players.ElementAt(i), Black = section.Players.ElementAt(i + 1), PairingID = i / 2, Result = PairingResult.NoResult });
+				section.Rounds.First().Pairings.Add(new Pairing { White = section.Players.ElementAt(i), Black = section.Players.ElementAt(i + 1), PairingID = i / 2, Result = PairingResult.WhiteWins });
 			}
 
 
-			//for (int i = 0; i < section.Rounds.First().Pairings.Count(); i++)
-			//{
-			//	Console.WriteLine(section.Rounds.First().Pairings.ElementAt(i).White.FirstName + " vs. " + section.Rounds.First().Pairings.ElementAt(i).Black.FirstName);
-			//}
+			for (int i = 0; i < section.Rounds.First().Pairings.Count(); i++)
+			{
+				Console.WriteLine(section.Rounds.First().Pairings.ElementAt(i).White.FirstName + " vs. " + section.Rounds.First().Pairings.ElementAt(i).Black.FirstName);
+			}
 
 			var command = Console.ReadLine();
 			if (command == "standings")
@@ -147,6 +146,7 @@ namespace ChessTD2.console
 						   ).Distinct()
 						   };
 		}
+
 		static double calculateScore(Section s, Player p)
 		{
 			var score =
@@ -159,6 +159,16 @@ namespace ChessTD2.console
 				).Sum();
 			return score;
 		}
+
+        public static List<Pairing> Pair(List<SectionPlayer> standings)
+        {
+            var result = new List<Pairing> { };
+            for (int i = 0; i < standings.Count; i+=2)
+            {
+                result.Add(new Pairing { White = standings.ElementAt(i), })
+            }
+            return result;
+        }
 	}
 }
 
