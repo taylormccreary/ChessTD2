@@ -8,10 +8,11 @@ namespace ChessTD2.Tests
     [TestFixture]
     public class PairMethodShould
     {
-        List<SectionPlayer> standings = new List<SectionPlayer> { };
+        List<SectionPlayer> standings;
         [SetUp]
         public void Setup()
         {
+            standings = new List<SectionPlayer> ();
             standings.Add(new SectionPlayer { PlayerID = 001, Rating = 1000, RoundResults = new List<PairingResult> { } });
             standings.Add(new SectionPlayer { PlayerID = 002, Rating = 1100, RoundResults = new List<PairingResult> { } });
             standings.Add(new SectionPlayer { PlayerID = 003, Rating = 1200, RoundResults = new List<PairingResult> { } });
@@ -36,6 +37,25 @@ namespace ChessTD2.Tests
             var result = Program.Pair(standings);
 
             Assert.AreEqual(4, result.Count);
+        }
+
+        [Test]
+        public void Return4PairingsFor9Players()
+        {
+            standings.Add(new SectionPlayer { PlayerID = 009, Rating = 1800, RoundResults = new List<PairingResult> { } });
+            var result = Program.Pair(standings);
+
+            Assert.AreEqual(4, result.Count);
+        }
+
+        [Test]
+        public void Return5PairingsFor10Players()
+        {
+            standings.Add(new SectionPlayer { PlayerID = 009, Rating = 1800, RoundResults = new List<PairingResult> { } });
+            standings.Add(new SectionPlayer { PlayerID = 010, Rating = 1900, RoundResults = new List<PairingResult> { } });
+            var result = Program.Pair(standings);
+
+            Assert.AreEqual(5, result.Count);
         }
     }
     
