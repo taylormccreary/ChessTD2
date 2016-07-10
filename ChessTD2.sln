@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessTD2", "ChessTD2\ChessTD2.csproj", "{475A45D6-26D6-431C-AD27-8912F7C91FCD}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessTD2.Tests", "ChessTD2.Tests\ChessTD2.Tests.csproj", "{67177F89-1951-4FAE-9D52-81F66E64164E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessTD2.console", "ChessTD2.console\ChessTD2.console.csproj", "{5DDECCF6-9CBD-488B-9E1E-7F86D888B207}"
@@ -15,10 +13,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{475A45D6-26D6-431C-AD27-8912F7C91FCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{475A45D6-26D6-431C-AD27-8912F7C91FCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{475A45D6-26D6-431C-AD27-8912F7C91FCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{475A45D6-26D6-431C-AD27-8912F7C91FCD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{67177F89-1951-4FAE-9D52-81F66E64164E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{67177F89-1951-4FAE-9D52-81F66E64164E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67177F89-1951-4FAE-9D52-81F66E64164E}.Release|Any CPU.ActiveCfg = Release|Any CPU
