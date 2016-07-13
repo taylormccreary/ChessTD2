@@ -19,7 +19,7 @@ namespace ChessTD2.console
             var standingsByRating = sectionPlayers.OrderByDescending(sp => sp.Rating).ToList();
             for (int i = 0; i < standingsByRating.Count / 2; i++)
             {
-                result.Add(new Pairing { White = standingsByRating.ElementAt(i), Black = standingsByRating.ElementAt(i + standingsByRating.Count / 2) });
+                result.Add(new Pairing { WhitePlayerID = standingsByRating.ElementAt(i).PlayerID, BlackPlayerID = standingsByRating.ElementAt(i + standingsByRating.Count / 2).PlayerID });
             }
             return result;
         }

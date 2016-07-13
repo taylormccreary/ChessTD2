@@ -8,8 +8,8 @@ namespace ChessTD2.console
 {
     public class Pairing
     {
-        public SectionPlayer White { get; set; }
-        public SectionPlayer Black { get; set; }
+        public int WhitePlayerID { get; set; }
+        public int BlackPlayerID { get; set; }
 
         public PairingResult Result { get; set; }
         public int RoundNumber { get; set; }

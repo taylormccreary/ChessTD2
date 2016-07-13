@@ -9,7 +9,7 @@ namespace ChessTD2.console
         public int PlayerID { get; set; }
         public int Rating { get; set; }
 
-        public List<PairingResult> RoundResults { get; set; }
+        public List<double> RoundResults { get; set; }
         public List<int> OpponentPlayerIDs { get; set; }
 
     }
