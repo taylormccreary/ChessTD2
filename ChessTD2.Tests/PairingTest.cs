@@ -94,6 +94,16 @@ namespace ChessTD2.Tests
             Assert.AreEqual(006, result.ElementAt(3).White.PlayerID);
             Assert.AreEqual(002, result.ElementAt(3).Black.PlayerID);
         }
+
+        [Test]
+        public void CorrectlyPairRound2For8Players()
+        {
+            var round1Pairings = Program.Pair(standings);
+            foreach (var game in round1Pairings)
+            {
+                game.Result = PairingResult.WhiteWins;
+            }
+        }
     }
     
 }

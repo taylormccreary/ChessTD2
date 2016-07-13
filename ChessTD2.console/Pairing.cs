@@ -12,7 +12,7 @@ namespace ChessTD2.console
         public SectionPlayer Black { get; set; }
 
         public PairingResult Result { get; set; }
-        public int Round { get; set; }
+        public int RoundNumber { get; set; }
     }
     
     public enum PairingResult { WhiteWins, BlackWins, Draw, Unknown }

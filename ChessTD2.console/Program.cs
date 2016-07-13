@@ -13,10 +13,10 @@ namespace ChessTD2.console
             Console.ReadKey();
         }
 
-        public static List<Pairing> Pair(List<SectionPlayer> standings)
+        public static List<Pairing> Pair(List<SectionPlayer> sectionPlayers)
         {
             var result = new List<Pairing> { };
-            var standingsByRating = standings.OrderByDescending(sp => sp.Rating).ToList();
+            var standingsByRating = sectionPlayers.OrderByDescending(sp => sp.Rating).ToList();
             for (int i = 0; i < standingsByRating.Count / 2; i++)
             {
                 result.Add(new Pairing { White = standingsByRating.ElementAt(i), Black = standingsByRating.ElementAt(i + standingsByRating.Count / 2) });
