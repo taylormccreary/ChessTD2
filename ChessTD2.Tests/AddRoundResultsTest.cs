@@ -22,16 +22,16 @@ namespace ChessTD2.Tests
             standings.SectionPlayers.Add(new SectionPlayer { PlayerID = 007, Rating = 1600, RoundResults = new List<double> { }, OpponentPlayerIDs = new List<int> { } });
             standings.SectionPlayers.Add(new SectionPlayer { PlayerID = 008, Rating = 1700, RoundResults = new List<double> { }, OpponentPlayerIDs = new List<int> { } });
             round1Pairings = Program.Pair(standings.SectionPlayers);
-        }
-
-        [Test]
-        public void UpdateOpponentIDs()
-        {
             foreach (var game in round1Pairings)
             {
                 game.Result = PairingResult.WhiteWins;
             }
             standings.addRoundResults(round1Pairings);
+        }
+
+        [Test]
+        public void UpdateOpponentIDs()
+        {
 
             Assert.Contains(004, standings.SectionPlayers.Where(p => p.PlayerID == 008).First().OpponentPlayerIDs.ToArray());
             Assert.Contains(008, standings.SectionPlayers.Where(p => p.PlayerID == 004).First().OpponentPlayerIDs.ToArray());
@@ -44,6 +44,22 @@ namespace ChessTD2.Tests
 
             Assert.Contains(001, standings.SectionPlayers.Where(p => p.PlayerID == 005).First().OpponentPlayerIDs.ToArray());
             Assert.Contains(005, standings.SectionPlayers.Where(p => p.PlayerID == 001).First().OpponentPlayerIDs.ToArray());
+        }
+
+        [Test]
+        public void UpdateRoundResults()
+        {
+            Assert.AreEqual(1, standings.SectionPlayers.Where(p => p.PlayerID == 008).First().RoundResults.First());
+            Assert.AreEqual(0, standings.SectionPlayers.Where(p => p.PlayerID == 004).First().RoundResults.First());
+
+            Assert.AreEqual(1, standings.SectionPlayers.Where(p => p.PlayerID == 007).First().RoundResults.First());
+            Assert.AreEqual(0, standings.SectionPlayers.Where(p => p.PlayerID == 003).First().RoundResults.First());
+
+            Assert.AreEqual(1, standings.SectionPlayers.Where(p => p.PlayerID == 006).First().RoundResults.First());
+            Assert.AreEqual(0, standings.SectionPlayers.Where(p => p.PlayerID == 002).First().RoundResults.First());
+
+            Assert.AreEqual(1, standings.SectionPlayers.Where(p => p.PlayerID == 005).First().RoundResults.First());
+            Assert.AreEqual(0, standings.SectionPlayers.Where(p => p.PlayerID == 001).First().RoundResults.First());
         }
     }
 }
