@@ -23,6 +23,14 @@ namespace ChessTD2.console
             }
             return result;
         }
+
+        // creates individual preference list just by listing the players by rank and removing the given player
+        public static List<SectionPlayer> GenerateIndividualPreferenceList(List<SectionPlayer> sectionPlayers, int id)
+        {
+            var rankedSectionPlayerList = sectionPlayers.OrderByDescending(sp => sp.RoundResults.Sum()).ThenByDescending(sp => sp.Rating).ToList();
+            rankedSectionPlayerList.Remove(rankedSectionPlayerList.Where(sp => sp.PlayerID == id).First());
+            return rankedSectionPlayerList;
+        }
     }
 }
 
