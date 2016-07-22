@@ -94,28 +94,64 @@ namespace ChessTD2.Tests
         }
 
         [Test]
-        public void SortScoreSectionCorrectly002()
+        public void SortScoreSectionCorrectly002a()
         {
+
             standings.SectionPlayers.Add(new SectionPlayer { PlayerID = 009, Rating = 1500, RoundResults = new List<double> { .5 }, OpponentPlayerIDs = new List<int> { } });
             standings.SectionPlayers.Add(new SectionPlayer { PlayerID = 010, Rating = 1600, RoundResults = new List<double> { .5 }, OpponentPlayerIDs = new List<int> { } });
             standings.SectionPlayers.Add(new SectionPlayer { PlayerID = 011, Rating = 1700, RoundResults = new List<double> { .5 }, OpponentPlayerIDs = new List<int> { } });
             standings.SectionPlayers.Add(new SectionPlayer { PlayerID = 012, Rating = 1800, RoundResults = new List<double> { .5 }, OpponentPlayerIDs = new List<int> { } });
 
-
             var list002 = Program.GenerateIndividualPreferenceList(standings.SectionPlayers, 002);
 
+            // 1 pt
             Assert.AreEqual(008, list002.ElementAt(0).PlayerID);
             Assert.AreEqual(007, list002.ElementAt(1).PlayerID);
             Assert.AreEqual(001, list002.ElementAt(2).PlayerID);
 
+            // .5 pts
+            // upper half
             Assert.AreEqual(012, list002.ElementAt(3).PlayerID);
             Assert.AreEqual(011, list002.ElementAt(4).PlayerID);
             Assert.AreEqual(010, list002.ElementAt(5).PlayerID);
-            Assert.AreEqual(009, list002.ElementAt(6).PlayerID);
 
+            // lower half
+            Assert.AreEqual(009, list002.ElementAt(6).PlayerID);
             Assert.AreEqual(005, list002.ElementAt(7).PlayerID);
 
+            // 0 pts
+            Assert.AreEqual(006, list002.ElementAt(8).PlayerID);
+            Assert.AreEqual(004, list002.ElementAt(9).PlayerID);
+            Assert.AreEqual(003, list002.ElementAt(10).PlayerID);
+        }
 
+        [Test]
+        public void SortScoreSectionCorrectly002b()
+        {
+            standings.SectionPlayers.Add(new SectionPlayer { PlayerID = 009, Rating = 700, RoundResults = new List<double> { .5 }, OpponentPlayerIDs = new List<int> { } });
+            standings.SectionPlayers.Add(new SectionPlayer { PlayerID = 010, Rating = 800, RoundResults = new List<double> { .5 }, OpponentPlayerIDs = new List<int> { } });
+            standings.SectionPlayers.Add(new SectionPlayer { PlayerID = 011, Rating = 900, RoundResults = new List<double> { .5 }, OpponentPlayerIDs = new List<int> { } });
+            standings.SectionPlayers.Add(new SectionPlayer { PlayerID = 012, Rating = 1000, RoundResults = new List<double> { .5 }, OpponentPlayerIDs = new List<int> { } });
+
+
+            var list002 = Program.GenerateIndividualPreferenceList(standings.SectionPlayers, 002);
+
+            // 1 pt
+            Assert.AreEqual(008, list002.ElementAt(0).PlayerID);
+            Assert.AreEqual(007, list002.ElementAt(1).PlayerID);
+            Assert.AreEqual(001, list002.ElementAt(2).PlayerID);
+
+            // .5 pts
+            // lower half
+            Assert.AreEqual(011, list002.ElementAt(3).PlayerID);
+            Assert.AreEqual(010, list002.ElementAt(4).PlayerID);
+            Assert.AreEqual(009, list002.ElementAt(5).PlayerID);
+
+            // upper half
+            Assert.AreEqual(005, list002.ElementAt(6).PlayerID);
+            Assert.AreEqual(012, list002.ElementAt(7).PlayerID);
+
+            // 0 pts
             Assert.AreEqual(006, list002.ElementAt(8).PlayerID);
             Assert.AreEqual(004, list002.ElementAt(9).PlayerID);
             Assert.AreEqual(003, list002.ElementAt(10).PlayerID);
