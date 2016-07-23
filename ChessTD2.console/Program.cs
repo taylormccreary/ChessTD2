@@ -69,17 +69,30 @@ namespace ChessTD2.console
                 rankedSectionPlayerList.Where(sp => sp.PlayerID == id).First()
             );
 
-            // move opponnents to the bottom of the list
-            foreach (var player in rankedSectionPlayerList.ToList()) // why the ToList? I'm not sure...see http://stackoverflow.com/questions/604831/collection-was-modified-enumeration-operation-may-not-execute
-            {
-                if (currentPlayer.OpponentPlayerIDs.Contains(player.PlayerID))
-                {
-                    rankedSectionPlayerList.Remove(player);
-                    rankedSectionPlayerList.Add(player);
-                }
-            }
+            // move opponents to the bottom of the list
+            rankedSectionPlayerList = rankedSectionPlayerList
+                .OrderBy(p => currentPlayer.OpponentPlayerIDs.Contains(p.PlayerID))
+                .ThenByDescending(p => p.RoundResults.Sum())
+                .ThenByDescending(p => p.Rating)
+                .ToList();
 
             return rankedSectionPlayerList;
+        }
+
+        public static List<SectionPlayer> ReducePreferenceLists(List<SectionPlayer> sectionPlayers)
+        {
+
+            return sectionPlayers;
+        }
+
+        public static void Propose(SectionPlayer proposer, SectionPlayer recipient)
+        {
+            int indexOfProposerInRecipientList = recipient.OpponentPlayerIDs.IndexOf(proposer.PlayerID);
+
+            if (indexOfProposerInRecipientList > -1)
+            {
+
+            }
         }
     }
 }
