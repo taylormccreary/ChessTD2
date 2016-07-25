@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Pairing.cs" />
     <Compile Include="PairingLogic.cs" />
+    <Compile Include="PotentialOpponentGroupings.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SectionPlayer.cs" />

@@ -32,61 +32,20 @@ namespace ChessTD2.console
         public static List<SectionPlayer> GenerateIndividualPreferenceList(List<SectionPlayer> sectionPlayers, int id)
         {
             var currentPlayer = sectionPlayers.Where(sp => sp.PlayerID == id).First();
-            var rankedSectionPlayerList = sectionPlayers
-                .OrderByDescending(sp => sp.RoundResults.Sum())
-                .ThenByDescending(sp => sp.Rating)
+            var currentPlayerPreferenceList = sectionPlayers
+                .Select(sp => new PotentialOpponentGroupings()
+                {
+                    PlayerID = sp.PlayerID,
+                    Rating = sp.Rating,
+                    Score = sp.RoundResults.Sum(),
+                    OpponentPlayerIDs = sp.OpponentPlayerIDs
+                })
+                .Where(sp => sp.PlayerID != currentPlayer.PlayerID)
                 .ToList();
 
 
-            // sort score section so that opposite half comes first.
-            var scoreSection = rankedSectionPlayerList
-                .Where(sp => sp.RoundResults.Sum() == currentPlayer.RoundResults.Sum())
-                .OrderByDescending(sp => sp.Rating)
-                .ToList();
-
-            var firstHalf = scoreSection.Take(scoreSection.Count() / 2);
-            var secondHalf = scoreSection.Skip(scoreSection.Count() / 2);
-            if (firstHalf.Contains(currentPlayer))
-            {
-                scoreSection = secondHalf.ToList();
-                scoreSection.AddRange(firstHalf);
-                
-                var firstToReplace = rankedSectionPlayerList
-                    .IndexOf
-                    (
-                        rankedSectionPlayerList
-                        .Where(sp => sp.RoundResults.Sum() == currentPlayer.RoundResults.Sum())
-                        .First()
-                    );
-
-                rankedSectionPlayerList.RemoveRange(firstToReplace, scoreSection.Count());
-                rankedSectionPlayerList.InsertRange(firstToReplace, scoreSection);
-            }
-
-            // remove the player whose preference list we're generating
-            rankedSectionPlayerList.Remove
-            (
-                rankedSectionPlayerList.Where(sp => sp.PlayerID == id).First()
-            );
-
-            // move opponents to the bottom of the list
-            rankedSectionPlayerList = rankedSectionPlayerList
-                .OrderBy(p => currentPlayer.OpponentPlayerIDs.Contains(p.PlayerID))
-                .ThenByDescending(p => p.RoundResults.Sum())
-                .ThenByDescending(p => p.Rating)
-                .ToList();
-
-            //// move opponents to the bottom of the list
-            //foreach (var player in rankedSectionPlayerList.ToList()) // why the ToList? I'm not sure...see http://stackoverflow.com/questions/604831/collection-was-modified-enumeration-operation-may-not-execute
-            //{
-            //    if (currentPlayer.OpponentPlayerIDs.Contains(player.PlayerID))
-            //    {
-            //        rankedSectionPlayerList.Remove(player);
-            //        rankedSectionPlayerList.Add(player);
-            //    }
-            //}
-
-            return rankedSectionPlayerList;
+           
+            return sectionPlayers;
         }
 
         public static List<SectionPlayer> ReducePreferenceLists(List<SectionPlayer> sectionPlayers)
