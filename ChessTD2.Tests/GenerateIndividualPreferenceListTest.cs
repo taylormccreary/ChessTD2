@@ -46,6 +46,20 @@ namespace ChessTD2.Tests
         }
 
         [Test]
+        public void SortPlayersByScoreAndRating()
+        {
+            var list005 = Program.GenerateIndividualPreferenceList(standings.SectionPlayers, 005);
+
+            Assert.AreEqual(008, list005.ElementAt(0).PlayerID);
+            Assert.AreEqual(007, list005.ElementAt(1).PlayerID);
+            Assert.AreEqual(001, list005.ElementAt(2).PlayerID);
+            Assert.AreEqual(002, list005.ElementAt(3).PlayerID);
+            Assert.AreEqual(006, list005.ElementAt(4).PlayerID);
+            Assert.AreEqual(004, list005.ElementAt(5).PlayerID);
+            Assert.AreEqual(003, list005.ElementAt(6).PlayerID);
+        }
+
+        [Test]
         public void SortPlayersCorrectly()
         {
             var list007 = Program.GenerateIndividualPreferenceList(standings.SectionPlayers, 007);

@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 
 namespace ChessTD2.console
 {
-    class PotentialOpponentGroupings
+    public class PotentialOpponentGroupings
     {
         public int PlayerID { get; set; }
         public int Rating { get; set; }
 
         public double Score { get; set; }
         public List<int> OpponentPlayerIDs { get; set; }
+
+        public int RelativeScoreGroup { get; set; }
+        public int OpponentGroup { get; set; }
     }
 }
