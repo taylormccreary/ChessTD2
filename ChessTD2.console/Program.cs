@@ -76,6 +76,16 @@ namespace ChessTD2.console
                 .ThenByDescending(p => p.Rating)
                 .ToList();
 
+            //// move opponents to the bottom of the list
+            //foreach (var player in rankedSectionPlayerList.ToList()) // why the ToList? I'm not sure...see http://stackoverflow.com/questions/604831/collection-was-modified-enumeration-operation-may-not-execute
+            //{
+            //    if (currentPlayer.OpponentPlayerIDs.Contains(player.PlayerID))
+            //    {
+            //        rankedSectionPlayerList.Remove(player);
+            //        rankedSectionPlayerList.Add(player);
+            //    }
+            //}
+
             return rankedSectionPlayerList;
         }
 
