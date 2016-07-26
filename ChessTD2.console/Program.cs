@@ -32,6 +32,9 @@ namespace ChessTD2.console
         public static List<PotentialOpponentGroupings> GenerateIndividualPreferenceList(List<SectionPlayer> sectionPlayers, int id)
         {
             var currentPlayer = sectionPlayers.Where(sp => sp.PlayerID == id).First();
+
+            // preference list is the the list of player groupings
+            // we order it so that we can handle the same score section
             var currentPlayerPreferenceList = sectionPlayers
                 .Select(sp => new PotentialOpponentGroupings()
                 {
@@ -41,10 +44,62 @@ namespace ChessTD2.console
                     OpponentPlayerIDs = sp.OpponentPlayerIDs
                 })
                 .Where(sp => sp.PlayerID != currentPlayer.PlayerID)
+                .OrderByDescending(p => p.Score)
+                .ThenByDescending(p => p.Rating)
                 .ToList();
 
             // Assign relative score group to each player
             currentPlayerPreferenceList.ForEach(player => player.RelativeScoreGroup = currentPlayer.RoundResults.Sum().CompareTo(player.Score));
+
+            // Order same score group halves
+            // find index of first (highest ranked) player in score group
+            int firstInScoreGroup = currentPlayerPreferenceList
+                .IndexOf
+                (
+                    currentPlayerPreferenceList
+                    .Where(p => p.Score == currentPlayer.RoundResults.Sum())
+                    .First()
+                );
+                
+            // find index of last (lowest ranked) player in score group
+            int lastInScoreGroup = currentPlayerPreferenceList
+                .IndexOf
+                (
+                    currentPlayerPreferenceList
+                    .Where(p => p.Score == currentPlayer.RoundResults.Sum())
+                    .Last()
+                );
+
+            // use the two indexes to determine index of first player in lower half
+            int firstInLowerHalf = (lastInScoreGroup - firstInScoreGroup) / 2 + firstInScoreGroup;
+            
+            // if the current player is before that player, he/she is in upper half
+            bool currentPlayerIsInUpperHalf = currentPlayerPreferenceList
+                .IndexOf
+                (
+                    currentPlayerPreferenceList
+                    .Where(p => p.PlayerID == currentPlayer.PlayerID)
+                    .First()
+                )
+                < firstInLowerHalf;
+
+            int upperHalfRank = currentPlayerIsInUpperHalf ? 2 : 1;
+            int lowerHalfRank = currentPlayerIsInUpperHalf ? 1 : 2;
+            
+
+            for (int i = firstInScoreGroup; i < firstInLowerHalf; i++)
+            {
+                currentPlayerPreferenceList.ElementAt(i).SameScoreGroupHalf = upperHalfRank;
+            }
+
+            for (int i = firstInLowerHalf; i <= lastInScoreGroup; i++)
+            {
+                currentPlayerPreferenceList.ElementAt(i).SameScoreGroupHalf = lowerHalfRank;
+            }
+
+            currentPlayerPreferenceList
+                .FindAll(p => p.Score != currentPlayer.RoundResults.Sum())
+                .ForEach(p => p.SameScoreGroupHalf = 999);
 
             // Assign opponents lower preference
             // Null coalescing operator along with elvis operator in case there are no opponents
@@ -56,6 +111,7 @@ namespace ChessTD2.console
             currentPlayerPreferenceList = currentPlayerPreferenceList
                 .OrderBy(p => p.OpponentGroup)
                 .ThenBy(p => p.RelativeScoreGroup)
+                .ThenBy(p => p.SameScoreGroupHalf)
                 .ThenByDescending(p => p.Score)
                 .ThenByDescending(p => p.Rating)
                 .ToList();
