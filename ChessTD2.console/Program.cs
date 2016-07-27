@@ -43,9 +43,11 @@ namespace ChessTD2.console
                     Score = sp.RoundResults.Sum(),
                     OpponentPlayerIDs = sp.OpponentPlayerIDs
                 })
-                .Where(sp => sp.PlayerID != currentPlayer.PlayerID)
+                // we need to keep the current player in the list to see which half of the score section he's in
+                //.Where(sp => sp.PlayerID != currentPlayer.PlayerID)
                 .OrderByDescending(p => p.Score)
                 .ThenByDescending(p => p.Rating)
+                .ThenBy(p => p.PlayerID)
                 .ToList();
 
             // Assign relative score group to each player
@@ -71,7 +73,7 @@ namespace ChessTD2.console
                 );
 
             // use the two indexes to determine index of first player in lower half
-            int firstInLowerHalf = (lastInScoreGroup - firstInScoreGroup) / 2 + firstInScoreGroup;
+            int firstInLowerHalf = lastInScoreGroup - (lastInScoreGroup - firstInScoreGroup) / 2;
             
             // if the current player is before that player, he/she is in upper half
             bool currentPlayerIsInUpperHalf = currentPlayerPreferenceList
@@ -109,6 +111,7 @@ namespace ChessTD2.console
 
             // Order players in preference list based on groupings
             currentPlayerPreferenceList = currentPlayerPreferenceList
+                .Where(sp => sp.PlayerID != currentPlayer.PlayerID)
                 .OrderBy(p => p.OpponentGroup)
                 .ThenBy(p => p.RelativeScoreGroup)
                 .ThenBy(p => p.SameScoreGroupHalf)

@@ -91,7 +91,7 @@ namespace ChessTD2.Tests
         }
 
         [Test]
-        public void SortScoreSectionCorrectly007()
+        public void SortScoreSectionCorrectly007UpperHalf()
         {
             standings.SectionPlayers.Add(new SectionPlayer { PlayerID = 009, Rating = 900, RoundResults = new List<double> { 1 }, OpponentPlayerIDs = new List<int> { } });
 
@@ -108,7 +108,7 @@ namespace ChessTD2.Tests
         }
 
         [Test]
-        public void SortScoreSectionCorrectly002a()
+        public void SortScoreSectionCorrectly002LowerHalf()
         {
 
             standings.SectionPlayers.Add(new SectionPlayer { PlayerID = 009, Rating = 1500, RoundResults = new List<double> { .5 }, OpponentPlayerIDs = new List<int> { } });
@@ -140,7 +140,7 @@ namespace ChessTD2.Tests
         }
 
         [Test]
-        public void SortScoreSectionCorrectly002b()
+        public void SortScoreSectionCorrectly002UpperHalf()
         {
             standings.SectionPlayers.Add(new SectionPlayer { PlayerID = 009, Rating = 700, RoundResults = new List<double> { .5 }, OpponentPlayerIDs = new List<int> { } });
             standings.SectionPlayers.Add(new SectionPlayer { PlayerID = 010, Rating = 800, RoundResults = new List<double> { .5 }, OpponentPlayerIDs = new List<int> { } });
