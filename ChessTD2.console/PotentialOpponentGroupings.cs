@@ -16,6 +16,6 @@ namespace ChessTD2.console
 
         public int RelativeScoreGroup { get; set; }
         public int OpponentGroup { get; set; }
-        public int SameScoreGroupHalf { get; set; }
+        public int SameScoreGroupHalf { get; set; } = 999;
     }
 }
