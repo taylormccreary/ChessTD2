@@ -11,7 +11,7 @@ namespace ChessTD2.console
 
         public List<SectionPlayer> SectionPlayers { get; set; }
 
-        public void addRoundResults(List<Pairing> round)
+        public void AddRoundResults(List<Pairing> round)
         {
             foreach (var pairing in round)
             {
@@ -115,5 +115,21 @@ namespace ChessTD2.console
             return preferenceList;
         }
 
+
+        public void Propose(int proposerID, int recipientID)
+        {
+            var allPreferenceLists = new Dictionary<int, PreferenceList> ();
+
+            foreach (var sp in SectionPlayers)
+            {
+                allPreferenceLists.Add(sp.PlayerID, GenerateIndividualPreferenceList(sp.PlayerID));
+            }
+            //int indexOfProposerInRecipientList = recipient.OpponentPlayerIDs.IndexOf(proposer.PlayerID);
+
+            //if (indexOfProposerInRecipientList > -1)
+            //{
+
+            //}
+        }
     }
 }

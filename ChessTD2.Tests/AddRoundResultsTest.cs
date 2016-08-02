@@ -26,7 +26,7 @@ namespace ChessTD2.Tests
             {
                 game.Result = PairingResult.WhiteWins;
             }
-            standings.addRoundResults(round1Pairings);
+            standings.AddRoundResults(round1Pairings);
         }
 
         [Test]
