@@ -28,84 +28,84 @@ namespace ChessTD2.console
             return result;
         }
 
-        // creates individual preference list just by listing the players by rank and removing the given player
-        public static PreferenceList GenerateIndividualPreferenceList(List<SectionPlayer> sectionPlayers, int id)
-        {
-            var currentPlayer = sectionPlayers.Where(sp => sp.PlayerID == id).First();
-            var currentPlayerScore = currentPlayer.RoundResults.Sum();
+        
+        //public static PreferenceList GenerateIndividualPreferenceList(List<SectionPlayer> sectionPlayers, int id)
+        //{
+        //    var currentPlayer = sectionPlayers.Where(sp => sp.PlayerID == id).First();
+        //    var currentPlayerScore = currentPlayer.RoundResults.Sum();
 
-            // preference list is the the list of player groupings
-            var currentPlayerPreferenceListGroupings = sectionPlayers
-                .Select(sp => new PotentialOpponentGroupings()
-                {
-                    PlayerID = sp.PlayerID,
-                    Rating = sp.Rating,
-                    Score = sp.RoundResults.Sum(),
-                    OpponentPlayerIDs = sp.OpponentPlayerIDs,
-                    RelativeScoreGroup = currentPlayerScore.CompareTo(sp.RoundResults.Sum())
-                })
-                // we need to keep the current player in the list to see which half of the score section he's in
-                //.Where(sp => sp.PlayerID != currentPlayer.PlayerID)
-                .ToList();
+        //    // preference list is the the list of player groupings
+        //    var currentPlayerPreferenceListGroupings = sectionPlayers
+        //        .Select(sp => new PotentialOpponentGroupings()
+        //        {
+        //            PlayerID = sp.PlayerID,
+        //            Rating = sp.Rating,
+        //            Score = sp.RoundResults.Sum(),
+        //            OpponentPlayerIDs = sp.OpponentPlayerIDs,
+        //            RelativeScoreGroup = currentPlayerScore.CompareTo(sp.RoundResults.Sum())
+        //        })
+        //        // we need to keep the current player in the list to see which half of the score section he's in
+        //        //.Where(sp => sp.PlayerID != currentPlayer.PlayerID)
+        //        .ToList();
 
-            var sameScoreSection = currentPlayerPreferenceListGroupings
-                .Where(p => p.Score == currentPlayerScore)
-                .OrderByDescending(p => p.Rating)
-                .ThenBy(p => p.PlayerID)
-                .ToList();
+        //    var sameScoreSection = currentPlayerPreferenceListGroupings
+        //        .Where(p => p.Score == currentPlayerScore)
+        //        .OrderByDescending(p => p.Rating)
+        //        .ThenBy(p => p.PlayerID)
+        //        .ToList();
 
-            var topOfLowerHalf = sameScoreSection.Count() / 2;
+        //    var topOfLowerHalf = sameScoreSection.Count() / 2;
 
-            var currentPlayerIsInUppperHalf = sameScoreSection
-                .IndexOf(
-                    sameScoreSection
-                    .Where(p => p.PlayerID == currentPlayer.PlayerID)
-                    .First()
-                ) < topOfLowerHalf;
+        //    var currentPlayerIsInUppperHalf = sameScoreSection
+        //        .IndexOf(
+        //            sameScoreSection
+        //            .Where(p => p.PlayerID == currentPlayer.PlayerID)
+        //            .First()
+        //        ) < topOfLowerHalf;
 
-            var upperHalfValue = currentPlayerIsInUppperHalf ? 2 : 1;
-            var lowerHalfValue = currentPlayerIsInUppperHalf ? 1 : 2;
+        //    var upperHalfValue = currentPlayerIsInUppperHalf ? 2 : 1;
+        //    var lowerHalfValue = currentPlayerIsInUppperHalf ? 1 : 2;
 
-            for (int i = 0; i < sameScoreSection.Count(); i++)
-            {
-                if (i < topOfLowerHalf)
-                {
-                    sameScoreSection.ElementAt(i).SameScoreGroupHalf = upperHalfValue;
-                }
-                else
-                {
-                    sameScoreSection.ElementAt(i).SameScoreGroupHalf = lowerHalfValue;
-                }
-            }
+        //    for (int i = 0; i < sameScoreSection.Count(); i++)
+        //    {
+        //        if (i < topOfLowerHalf)
+        //        {
+        //            sameScoreSection.ElementAt(i).SameScoreGroupHalf = upperHalfValue;
+        //        }
+        //        else
+        //        {
+        //            sameScoreSection.ElementAt(i).SameScoreGroupHalf = lowerHalfValue;
+        //        }
+        //    }
 
-            // Assign opponents lower preference
-            // Null coalescing operator along with elvis operator in case there are no opponents
-            currentPlayerPreferenceListGroupings
-                .FindAll(player => currentPlayer.OpponentPlayerIDs?.Contains(player.PlayerID) ?? false)
-                .ForEach(player => player.OpponentGroup = 1);
+        //    // Assign opponents lower preference
+        //    // Null coalescing operator along with elvis operator in case there are no opponents
+        //    currentPlayerPreferenceListGroupings
+        //        .FindAll(player => currentPlayer.OpponentPlayerIDs?.Contains(player.PlayerID) ?? false)
+        //        .ForEach(player => player.OpponentGroup = 1);
 
-            // Order players in preference list based on groupings
-            currentPlayerPreferenceListGroupings = currentPlayerPreferenceListGroupings
-                .Where(sp => sp.PlayerID != currentPlayer.PlayerID)
-                .OrderBy(p => p.OpponentGroup)
-                .ThenBy(p => p.RelativeScoreGroup)
-                .ThenBy(p => p.SameScoreGroupHalf)
-                .ThenByDescending(p => p.Score)
-                .ThenByDescending(p => p.Rating)
-                .ThenBy(p => p.PlayerID)
-                .ToList();
+        //    // Order players in preference list based on groupings
+        //    currentPlayerPreferenceListGroupings = currentPlayerPreferenceListGroupings
+        //        .Where(sp => sp.PlayerID != currentPlayer.PlayerID)
+        //        .OrderBy(p => p.OpponentGroup)
+        //        .ThenBy(p => p.RelativeScoreGroup)
+        //        .ThenBy(p => p.SameScoreGroupHalf)
+        //        .ThenByDescending(p => p.Score)
+        //        .ThenByDescending(p => p.Rating)
+        //        .ThenBy(p => p.PlayerID)
+        //        .ToList();
 
-            var preferenceList = new PreferenceList()
-            {
-                PlayerID = currentPlayer.PlayerID,
-                PreferenceListIDs = currentPlayerPreferenceListGroupings
-                    .Select(p => p.PlayerID)
-                    .ToList()
-            };
+        //    var preferenceList = new PreferenceList()
+        //    {
+        //        PlayerID = currentPlayer.PlayerID,
+        //        PreferenceListIDs = currentPlayerPreferenceListGroupings
+        //            .Select(p => p.PlayerID)
+        //            .ToList()
+        //    };
             
 
-            return preferenceList;
-        }
+        //    return preferenceList;
+        //}
 
         public static List<SectionPlayer> ReducePreferenceLists(List<SectionPlayer> sectionPlayers)
         {

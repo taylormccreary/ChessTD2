@@ -50,6 +50,7 @@
     <Compile Include="PreferenceList.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Section.cs" />
     <Compile Include="SectionPlayer.cs" />
     <Compile Include="Standings.cs" />
   </ItemGroup>

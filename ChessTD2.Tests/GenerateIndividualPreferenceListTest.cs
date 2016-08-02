@@ -26,14 +26,14 @@ namespace ChessTD2.Tests
         [Test]
         public void CreateListsWithAllPlayersExceptOne()
         {
-            var list001 = Program.GenerateIndividualPreferenceList(standings.SectionPlayers, 001);
-            var list002 = Program.GenerateIndividualPreferenceList(standings.SectionPlayers, 002);
-            var list003 = Program.GenerateIndividualPreferenceList(standings.SectionPlayers, 003);
-            var list004 = Program.GenerateIndividualPreferenceList(standings.SectionPlayers, 004);
-            var list005 = Program.GenerateIndividualPreferenceList(standings.SectionPlayers, 005);
-            var list006 = Program.GenerateIndividualPreferenceList(standings.SectionPlayers, 006);
-            var list007 = Program.GenerateIndividualPreferenceList(standings.SectionPlayers, 007);
-            var list008 = Program.GenerateIndividualPreferenceList(standings.SectionPlayers, 008);
+            var list001 = standings.GenerateIndividualPreferenceList(001);
+            var list002 = standings.GenerateIndividualPreferenceList(002);
+            var list003 = standings.GenerateIndividualPreferenceList(003);
+            var list004 = standings.GenerateIndividualPreferenceList(004);
+            var list005 = standings.GenerateIndividualPreferenceList(005);
+            var list006 = standings.GenerateIndividualPreferenceList(006);
+            var list007 = standings.GenerateIndividualPreferenceList(007);
+            var list008 = standings.GenerateIndividualPreferenceList(008);
 
             Assert.AreEqual(standings.SectionPlayers.Count() - 1, list001.PreferenceListIDs.Count());
             Assert.AreEqual(standings.SectionPlayers.Count() - 1, list002.PreferenceListIDs.Count());
@@ -48,7 +48,7 @@ namespace ChessTD2.Tests
         [Test]
         public void SortPlayersByScoreAndRating()
         {
-            var list005 = Program.GenerateIndividualPreferenceList(standings.SectionPlayers, 005);
+            var list005 = standings.GenerateIndividualPreferenceList(005);
 
             Assert.AreEqual(008, list005.PreferenceListIDs.ElementAt(0));
             Assert.AreEqual(007, list005.PreferenceListIDs.ElementAt(1));
@@ -62,7 +62,7 @@ namespace ChessTD2.Tests
         [Test]
         public void SortPlayersCorrectly()
         {
-            var list007 = Program.GenerateIndividualPreferenceList(standings.SectionPlayers, 007);
+            var list007 = standings.GenerateIndividualPreferenceList(007);
 
             Assert.AreEqual(008, list007.PreferenceListIDs.ElementAt(0));
             Assert.AreEqual(001, list007.PreferenceListIDs.ElementAt(1));
@@ -79,7 +79,7 @@ namespace ChessTD2.Tests
             standings.SectionPlayers.Where(sp => sp.PlayerID == 007).First().OpponentPlayerIDs.Add(005);
             standings.SectionPlayers.Where(sp => sp.PlayerID == 007).First().OpponentPlayerIDs.Add(001);
 
-            var list007 = Program.GenerateIndividualPreferenceList(standings.SectionPlayers, 007);
+            var list007 = standings.GenerateIndividualPreferenceList(007);
 
             Assert.AreEqual(008, list007.PreferenceListIDs.ElementAt(0));
             Assert.AreEqual(002, list007.PreferenceListIDs.ElementAt(1));
@@ -95,7 +95,7 @@ namespace ChessTD2.Tests
         {
             standings.SectionPlayers.Add(new SectionPlayer { PlayerID = 009, Rating = 900, RoundResults = new List<double> { 1 }, OpponentPlayerIDs = new List<int> { } });
 
-            var list007 = Program.GenerateIndividualPreferenceList(standings.SectionPlayers, 007);
+            var list007 = standings.GenerateIndividualPreferenceList(007);
 
             Assert.AreEqual(001, list007.PreferenceListIDs.ElementAt(0));
             Assert.AreEqual(009, list007.PreferenceListIDs.ElementAt(1));
@@ -116,7 +116,7 @@ namespace ChessTD2.Tests
             standings.SectionPlayers.Add(new SectionPlayer { PlayerID = 011, Rating = 1700, RoundResults = new List<double> { .5 }, OpponentPlayerIDs = new List<int> { } });
             standings.SectionPlayers.Add(new SectionPlayer { PlayerID = 012, Rating = 1800, RoundResults = new List<double> { .5 }, OpponentPlayerIDs = new List<int> { } });
 
-            var list002 = Program.GenerateIndividualPreferenceList(standings.SectionPlayers, 002);
+            var list002 = standings.GenerateIndividualPreferenceList(002);
 
             // 1 pt
             Assert.AreEqual(008, list002.PreferenceListIDs.ElementAt(0));
@@ -148,7 +148,7 @@ namespace ChessTD2.Tests
             standings.SectionPlayers.Add(new SectionPlayer { PlayerID = 012, Rating = 1000, RoundResults = new List<double> { .5 }, OpponentPlayerIDs = new List<int> { } });
 
 
-            var list002 = Program.GenerateIndividualPreferenceList(standings.SectionPlayers, 002);
+            var list002 = standings.GenerateIndividualPreferenceList(002);
 
             // 1 pt
             Assert.AreEqual(008, list002.PreferenceListIDs.ElementAt(0));
