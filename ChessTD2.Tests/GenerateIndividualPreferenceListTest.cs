@@ -35,14 +35,14 @@ namespace ChessTD2.Tests
             var list007 = Program.GenerateIndividualPreferenceList(standings.SectionPlayers, 007);
             var list008 = Program.GenerateIndividualPreferenceList(standings.SectionPlayers, 008);
 
-            Assert.AreEqual(standings.SectionPlayers.Count() - 1, list001.Count());
-            Assert.AreEqual(standings.SectionPlayers.Count() - 1, list002.Count());
-            Assert.AreEqual(standings.SectionPlayers.Count() - 1, list003.Count());
-            Assert.AreEqual(standings.SectionPlayers.Count() - 1, list004.Count());
-            Assert.AreEqual(standings.SectionPlayers.Count() - 1, list005.Count());
-            Assert.AreEqual(standings.SectionPlayers.Count() - 1, list006.Count());
-            Assert.AreEqual(standings.SectionPlayers.Count() - 1, list007.Count());
-            Assert.AreEqual(standings.SectionPlayers.Count() - 1, list008.Count());
+            Assert.AreEqual(standings.SectionPlayers.Count() - 1, list001.PreferenceListIDs.Count());
+            Assert.AreEqual(standings.SectionPlayers.Count() - 1, list002.PreferenceListIDs.Count());
+            Assert.AreEqual(standings.SectionPlayers.Count() - 1, list003.PreferenceListIDs.Count());
+            Assert.AreEqual(standings.SectionPlayers.Count() - 1, list004.PreferenceListIDs.Count());
+            Assert.AreEqual(standings.SectionPlayers.Count() - 1, list005.PreferenceListIDs.Count());
+            Assert.AreEqual(standings.SectionPlayers.Count() - 1, list006.PreferenceListIDs.Count());
+            Assert.AreEqual(standings.SectionPlayers.Count() - 1, list007.PreferenceListIDs.Count());
+            Assert.AreEqual(standings.SectionPlayers.Count() - 1, list008.PreferenceListIDs.Count());
         }
 
         [Test]
@@ -50,13 +50,13 @@ namespace ChessTD2.Tests
         {
             var list005 = Program.GenerateIndividualPreferenceList(standings.SectionPlayers, 005);
 
-            Assert.AreEqual(008, list005.ElementAt(0).PlayerID);
-            Assert.AreEqual(007, list005.ElementAt(1).PlayerID);
-            Assert.AreEqual(001, list005.ElementAt(2).PlayerID);
-            Assert.AreEqual(002, list005.ElementAt(3).PlayerID);
-            Assert.AreEqual(006, list005.ElementAt(4).PlayerID);
-            Assert.AreEqual(004, list005.ElementAt(5).PlayerID);
-            Assert.AreEqual(003, list005.ElementAt(6).PlayerID);
+            Assert.AreEqual(008, list005.PreferenceListIDs.ElementAt(0));
+            Assert.AreEqual(007, list005.PreferenceListIDs.ElementAt(1));
+            Assert.AreEqual(001, list005.PreferenceListIDs.ElementAt(2));
+            Assert.AreEqual(002, list005.PreferenceListIDs.ElementAt(3));
+            Assert.AreEqual(006, list005.PreferenceListIDs.ElementAt(4));
+            Assert.AreEqual(004, list005.PreferenceListIDs.ElementAt(5));
+            Assert.AreEqual(003, list005.PreferenceListIDs.ElementAt(6));
         }
 
         [Test]
@@ -64,13 +64,13 @@ namespace ChessTD2.Tests
         {
             var list007 = Program.GenerateIndividualPreferenceList(standings.SectionPlayers, 007);
 
-            Assert.AreEqual(008, list007.ElementAt(0).PlayerID);
-            Assert.AreEqual(001, list007.ElementAt(1).PlayerID);
-            Assert.AreEqual(005, list007.ElementAt(2).PlayerID);
-            Assert.AreEqual(002, list007.ElementAt(3).PlayerID);
-            Assert.AreEqual(006, list007.ElementAt(4).PlayerID);
-            Assert.AreEqual(004, list007.ElementAt(5).PlayerID);
-            Assert.AreEqual(003, list007.ElementAt(6).PlayerID);
+            Assert.AreEqual(008, list007.PreferenceListIDs.ElementAt(0));
+            Assert.AreEqual(001, list007.PreferenceListIDs.ElementAt(1));
+            Assert.AreEqual(005, list007.PreferenceListIDs.ElementAt(2));
+            Assert.AreEqual(002, list007.PreferenceListIDs.ElementAt(3));
+            Assert.AreEqual(006, list007.PreferenceListIDs.ElementAt(4));
+            Assert.AreEqual(004, list007.PreferenceListIDs.ElementAt(5));
+            Assert.AreEqual(003, list007.PreferenceListIDs.ElementAt(6));
         }
 
         [Test]
@@ -81,13 +81,13 @@ namespace ChessTD2.Tests
 
             var list007 = Program.GenerateIndividualPreferenceList(standings.SectionPlayers, 007);
 
-            Assert.AreEqual(008, list007.ElementAt(0).PlayerID);
-            Assert.AreEqual(002, list007.ElementAt(1).PlayerID);
-            Assert.AreEqual(006, list007.ElementAt(2).PlayerID);
-            Assert.AreEqual(004, list007.ElementAt(3).PlayerID);
-            Assert.AreEqual(003, list007.ElementAt(4).PlayerID);
-            Assert.AreEqual(001, list007.ElementAt(5).PlayerID);
-            Assert.AreEqual(005, list007.ElementAt(6).PlayerID);
+            Assert.AreEqual(008, list007.PreferenceListIDs.ElementAt(0));
+            Assert.AreEqual(002, list007.PreferenceListIDs.ElementAt(1));
+            Assert.AreEqual(006, list007.PreferenceListIDs.ElementAt(2));
+            Assert.AreEqual(004, list007.PreferenceListIDs.ElementAt(3));
+            Assert.AreEqual(003, list007.PreferenceListIDs.ElementAt(4));
+            Assert.AreEqual(001, list007.PreferenceListIDs.ElementAt(5));
+            Assert.AreEqual(005, list007.PreferenceListIDs.ElementAt(6));
         }
 
         [Test]
@@ -97,14 +97,14 @@ namespace ChessTD2.Tests
 
             var list007 = Program.GenerateIndividualPreferenceList(standings.SectionPlayers, 007);
 
-            Assert.AreEqual(001, list007.ElementAt(0).PlayerID);
-            Assert.AreEqual(009, list007.ElementAt(1).PlayerID);
-            Assert.AreEqual(008, list007.ElementAt(2).PlayerID);
-            Assert.AreEqual(005, list007.ElementAt(3).PlayerID);
-            Assert.AreEqual(002, list007.ElementAt(4).PlayerID);
-            Assert.AreEqual(006, list007.ElementAt(5).PlayerID);
-            Assert.AreEqual(004, list007.ElementAt(6).PlayerID);
-            Assert.AreEqual(003, list007.ElementAt(7).PlayerID);
+            Assert.AreEqual(001, list007.PreferenceListIDs.ElementAt(0));
+            Assert.AreEqual(009, list007.PreferenceListIDs.ElementAt(1));
+            Assert.AreEqual(008, list007.PreferenceListIDs.ElementAt(2));
+            Assert.AreEqual(005, list007.PreferenceListIDs.ElementAt(3));
+            Assert.AreEqual(002, list007.PreferenceListIDs.ElementAt(4));
+            Assert.AreEqual(006, list007.PreferenceListIDs.ElementAt(5));
+            Assert.AreEqual(004, list007.PreferenceListIDs.ElementAt(6));
+            Assert.AreEqual(003, list007.PreferenceListIDs.ElementAt(7));
         }
 
         [Test]
@@ -119,24 +119,24 @@ namespace ChessTD2.Tests
             var list002 = Program.GenerateIndividualPreferenceList(standings.SectionPlayers, 002);
 
             // 1 pt
-            Assert.AreEqual(008, list002.ElementAt(0).PlayerID);
-            Assert.AreEqual(007, list002.ElementAt(1).PlayerID);
-            Assert.AreEqual(001, list002.ElementAt(2).PlayerID);
+            Assert.AreEqual(008, list002.PreferenceListIDs.ElementAt(0));
+            Assert.AreEqual(007, list002.PreferenceListIDs.ElementAt(1));
+            Assert.AreEqual(001, list002.PreferenceListIDs.ElementAt(2));
 
             // .5 pts
             // upper half
-            Assert.AreEqual(012, list002.ElementAt(3).PlayerID);
-            Assert.AreEqual(011, list002.ElementAt(4).PlayerID);
-            Assert.AreEqual(010, list002.ElementAt(5).PlayerID);
+            Assert.AreEqual(012, list002.PreferenceListIDs.ElementAt(3));
+            Assert.AreEqual(011, list002.PreferenceListIDs.ElementAt(4));
+            Assert.AreEqual(010, list002.PreferenceListIDs.ElementAt(5));
 
             // lower half
-            Assert.AreEqual(009, list002.ElementAt(6).PlayerID);
-            Assert.AreEqual(005, list002.ElementAt(7).PlayerID);
+            Assert.AreEqual(009, list002.PreferenceListIDs.ElementAt(6));
+            Assert.AreEqual(005, list002.PreferenceListIDs.ElementAt(7));
 
             // 0 pts
-            Assert.AreEqual(006, list002.ElementAt(8).PlayerID);
-            Assert.AreEqual(004, list002.ElementAt(9).PlayerID);
-            Assert.AreEqual(003, list002.ElementAt(10).PlayerID);
+            Assert.AreEqual(006, list002.PreferenceListIDs.ElementAt(8));
+            Assert.AreEqual(004, list002.PreferenceListIDs.ElementAt(9));
+            Assert.AreEqual(003, list002.PreferenceListIDs.ElementAt(10));
         }
 
         [Test]
@@ -151,24 +151,24 @@ namespace ChessTD2.Tests
             var list002 = Program.GenerateIndividualPreferenceList(standings.SectionPlayers, 002);
 
             // 1 pt
-            Assert.AreEqual(008, list002.ElementAt(0).PlayerID);
-            Assert.AreEqual(007, list002.ElementAt(1).PlayerID);
-            Assert.AreEqual(001, list002.ElementAt(2).PlayerID);
+            Assert.AreEqual(008, list002.PreferenceListIDs.ElementAt(0));
+            Assert.AreEqual(007, list002.PreferenceListIDs.ElementAt(1));
+            Assert.AreEqual(001, list002.PreferenceListIDs.ElementAt(2));
 
             // .5 pts
             // lower half
-            Assert.AreEqual(011, list002.ElementAt(3).PlayerID);
-            Assert.AreEqual(010, list002.ElementAt(4).PlayerID);
-            Assert.AreEqual(009, list002.ElementAt(5).PlayerID);
+            Assert.AreEqual(011, list002.PreferenceListIDs.ElementAt(3));
+            Assert.AreEqual(010, list002.PreferenceListIDs.ElementAt(4));
+            Assert.AreEqual(009, list002.PreferenceListIDs.ElementAt(5));
 
             // upper half
-            Assert.AreEqual(005, list002.ElementAt(6).PlayerID);
-            Assert.AreEqual(012, list002.ElementAt(7).PlayerID);
+            Assert.AreEqual(005, list002.PreferenceListIDs.ElementAt(6));
+            Assert.AreEqual(012, list002.PreferenceListIDs.ElementAt(7));
 
             // 0 pts
-            Assert.AreEqual(006, list002.ElementAt(8).PlayerID);
-            Assert.AreEqual(004, list002.ElementAt(9).PlayerID);
-            Assert.AreEqual(003, list002.ElementAt(10).PlayerID);
+            Assert.AreEqual(006, list002.PreferenceListIDs.ElementAt(8));
+            Assert.AreEqual(004, list002.PreferenceListIDs.ElementAt(9));
+            Assert.AreEqual(003, list002.PreferenceListIDs.ElementAt(10));
         }
     }
 }

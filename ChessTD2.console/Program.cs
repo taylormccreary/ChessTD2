@@ -29,13 +29,13 @@ namespace ChessTD2.console
         }
 
         // creates individual preference list just by listing the players by rank and removing the given player
-        public static List<PotentialOpponentGroupings> GenerateIndividualPreferenceList(List<SectionPlayer> sectionPlayers, int id)
+        public static PreferenceList GenerateIndividualPreferenceList(List<SectionPlayer> sectionPlayers, int id)
         {
             var currentPlayer = sectionPlayers.Where(sp => sp.PlayerID == id).First();
             var currentPlayerScore = currentPlayer.RoundResults.Sum();
 
             // preference list is the the list of player groupings
-            var currentPlayerPreferenceList = sectionPlayers
+            var currentPlayerPreferenceListGroupings = sectionPlayers
                 .Select(sp => new PotentialOpponentGroupings()
                 {
                     PlayerID = sp.PlayerID,
@@ -48,7 +48,7 @@ namespace ChessTD2.console
                 //.Where(sp => sp.PlayerID != currentPlayer.PlayerID)
                 .ToList();
 
-            var sameScoreSection = currentPlayerPreferenceList
+            var sameScoreSection = currentPlayerPreferenceListGroupings
                 .Where(p => p.Score == currentPlayerScore)
                 .OrderByDescending(p => p.Rating)
                 .ThenBy(p => p.PlayerID)
@@ -80,12 +80,12 @@ namespace ChessTD2.console
 
             // Assign opponents lower preference
             // Null coalescing operator along with elvis operator in case there are no opponents
-            currentPlayerPreferenceList
+            currentPlayerPreferenceListGroupings
                 .FindAll(player => currentPlayer.OpponentPlayerIDs?.Contains(player.PlayerID) ?? false)
                 .ForEach(player => player.OpponentGroup = 1);
 
             // Order players in preference list based on groupings
-            currentPlayerPreferenceList = currentPlayerPreferenceList
+            currentPlayerPreferenceListGroupings = currentPlayerPreferenceListGroupings
                 .Where(sp => sp.PlayerID != currentPlayer.PlayerID)
                 .OrderBy(p => p.OpponentGroup)
                 .ThenBy(p => p.RelativeScoreGroup)
@@ -95,7 +95,16 @@ namespace ChessTD2.console
                 .ThenBy(p => p.PlayerID)
                 .ToList();
 
-            return currentPlayerPreferenceList;
+            var preferenceList = new PreferenceList()
+            {
+                PlayerID = currentPlayer.PlayerID,
+                PreferenceListIDs = currentPlayerPreferenceListGroupings
+                    .Select(p => p.PlayerID)
+                    .ToList()
+            };
+            
+
+            return preferenceList;
         }
 
         public static List<SectionPlayer> ReducePreferenceLists(List<SectionPlayer> sectionPlayers)
