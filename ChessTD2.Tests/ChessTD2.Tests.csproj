@@ -58,6 +58,7 @@
     <Compile Include="GenerateIndividualPreferenceListTest.cs" />
     <Compile Include="PairTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProposeTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ChessTD2.console\ChessTD2.console.csproj">

@@ -25,11 +25,13 @@ namespace ChessTD2.console
                 {
                     white.RoundResults.Add(1);
                     black.RoundResults.Add(0);
-                }else if (pairing.Result == PairingResult.BlackWins)
+                }
+                else if (pairing.Result == PairingResult.BlackWins)
                 {
                     white.RoundResults.Add(0);
                     black.RoundResults.Add(1);
-                }else if (pairing.Result == PairingResult.Draw)
+                }
+                else if (pairing.Result == PairingResult.Draw)
                 {
                     white.RoundResults.Add(.5);
                     black.RoundResults.Add(.5);
@@ -116,20 +118,33 @@ namespace ChessTD2.console
         }
 
 
-        public void Propose(int proposerID, int recipientID)
+        public void Propose(int proposerID, int recipientID, Dictionary<int, PreferenceList> allPreferenceLists)
         {
-            var allPreferenceLists = new Dictionary<int, PreferenceList> ();
-
-            foreach (var sp in SectionPlayers)
+            // check if proposer is in recipient's list
+            if (allPreferenceLists[proposerID].PreferenceListIDs.Contains(recipientID))
             {
-                allPreferenceLists.Add(sp.PlayerID, GenerateIndividualPreferenceList(sp.PlayerID));
+                // check if the recipient has a current proposal
+                // if he does, remove them from each others' lists and have that guy propose to his first choice
+
+                // set new current proposal of the recipient to the proposer
+                // drop the bottom of the recipients list
             }
-            //int indexOfProposerInRecipientList = recipient.OpponentPlayerIDs.IndexOf(proposer.PlayerID);
+            // else remove recipient from proposer's list
+            else
+            {
+                allPreferenceLists[proposerID].PreferenceListIDs.Remove(recipientID);
 
-            //if (indexOfProposerInRecipientList > -1)
-            //{
+                // have proposer propose to the next person on their list (the new first person)
+                if (allPreferenceLists[proposerID].PreferenceListIDs.Count() > 0)
+                {
+                    Propose(proposerID, allPreferenceLists[proposerID].PreferenceListIDs.First(), allPreferenceLists);
 
-            //}
+                }
+                else
+                {
+                    throw new Exception("Preference list is empty");
+                }
+            }
         }
     }
 }
