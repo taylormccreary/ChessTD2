@@ -137,10 +137,18 @@ namespace ChessTD2.console
                 // set new current proposal of the recipient to the proposer
                 allPreferenceLists[recipientID].CurrentProposal = proposerID;
 
-                // drop the bottom of the recipients list
+                // find where proposer id is so we can drop everything after that
                 var idsBeforeAndIncludingProposer = allPreferenceLists[recipientID].PreferenceListIDs
                     .IndexOf(proposerID)
                     + 1;
+
+                // for all the ids we are about to drop, delete recipient id from their pref list
+                for (int i = idsBeforeAndIncludingProposer + 1; i < allPreferenceLists[recipientID].PreferenceListIDs.Count(); i++)
+                {
+                    allPreferenceLists[i].PreferenceListIDs.Remove(recipientID);
+                }
+
+                // drop the bottom of the recipients list
                 allPreferenceLists[recipientID].PreferenceListIDs = allPreferenceLists[recipientID].PreferenceListIDs
                     .Take(idsBeforeAndIncludingProposer)
                     .ToList();
