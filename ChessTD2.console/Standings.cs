@@ -110,7 +110,8 @@ namespace ChessTD2.console
                 PlayerID = currentPlayer.PlayerID,
                 PreferenceListIDs = currentPlayerPreferenceListGroupings
                     .Select(p => p.PlayerID)
-                    .ToList()
+                    .ToList(),
+                CurrentProposal = -1
             };
 
 
@@ -124,10 +125,25 @@ namespace ChessTD2.console
             if (allPreferenceLists[proposerID].PreferenceListIDs.Contains(recipientID))
             {
                 // check if the recipient has a current proposal
-                // if he does, remove them from each others' lists and have that guy propose to his first choice
+                if (allPreferenceLists[recipientID].CurrentProposal != -1)
+                {
+                    // if he does, remove them from each others' lists and have that guy propose to his first choice
+                    var currProp = allPreferenceLists[recipientID].CurrentProposal;
+                    allPreferenceLists[currProp].PreferenceListIDs.Remove(recipientID);
+                    allPreferenceLists[recipientID].PreferenceListIDs.Remove(currProp);
+                    Propose(currProp, allPreferenceLists[currProp].PreferenceListIDs.First(), allPreferenceLists);
+                }
 
                 // set new current proposal of the recipient to the proposer
+                allPreferenceLists[recipientID].CurrentProposal = proposerID;
+
                 // drop the bottom of the recipients list
+                var idsBeforeAndIncludingProposer = allPreferenceLists[recipientID].PreferenceListIDs
+                    .IndexOf(proposerID)
+                    + 1;
+                allPreferenceLists[recipientID].PreferenceListIDs = allPreferenceLists[recipientID].PreferenceListIDs
+                    .Take(idsBeforeAndIncludingProposer)
+                    .ToList();
             }
             // else remove recipient from proposer's list
             else
