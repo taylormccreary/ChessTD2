@@ -65,26 +65,30 @@ namespace ChessTD2.Tests
             [Test]
             public void CorrectlyModifyListsAfterFirstHalfOfProposals()
             {
-                // THIS IS ALL WRONG
-                var recipientID5 = prefLists[005].PreferenceListIDs.First();
-                var recipientID6 = prefLists[006].PreferenceListIDs.First();
-                var recipientID7 = prefLists[007].PreferenceListIDs.First();
                 var recipientID8 = prefLists[008].PreferenceListIDs.First();
-                
-                var listBefore5 = prefLists[recipientID5].PreferenceListIDs;
-                var listBefore6 = prefLists[recipientID6].PreferenceListIDs;
-                var listBefore7 = prefLists[recipientID7].PreferenceListIDs;
-                var listBefore8 = prefLists[recipientID8].PreferenceListIDs;
-
                 standings.Propose(8, recipientID8, prefLists);
+
+                var recipientID7 = prefLists[007].PreferenceListIDs.First();
                 standings.Propose(7, recipientID7, prefLists);
+
+                var recipientID6 = prefLists[006].PreferenceListIDs.First();
                 standings.Propose(6, recipientID6, prefLists);
+
+                var recipientID5 = prefLists[005].PreferenceListIDs.First();
                 standings.Propose(5, recipientID5, prefLists);
                 
                 Assert.AreEqual(8, prefLists[recipientID8].PreferenceListIDs.Last());
+                Assert.AreEqual(1, prefLists[recipientID8].PreferenceListIDs.Count());
+
                 Assert.AreEqual(7, prefLists[recipientID7].PreferenceListIDs.Last());
+                Assert.AreEqual(2, prefLists[recipientID7].PreferenceListIDs.Count());
+
                 Assert.AreEqual(6, prefLists[recipientID6].PreferenceListIDs.Last());
+                Assert.AreEqual(3, prefLists[recipientID6].PreferenceListIDs.Count());
+
                 Assert.AreEqual(5, prefLists[recipientID5].PreferenceListIDs.Last());
+                Assert.AreEqual(4, prefLists[recipientID5].PreferenceListIDs.Count());
+
             }
         }
     }

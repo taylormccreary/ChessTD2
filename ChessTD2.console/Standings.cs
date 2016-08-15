@@ -143,9 +143,10 @@ namespace ChessTD2.console
                     + 1;
 
                 // for all the ids we are about to drop, delete recipient id from their pref list
-                for (int i = idsBeforeAndIncludingProposer + 1; i < allPreferenceLists[recipientID].PreferenceListIDs.Count(); i++)
+                for (int i = idsBeforeAndIncludingProposer; i < allPreferenceLists[recipientID].PreferenceListIDs.Count(); i++)
                 {
-                    allPreferenceLists[i].PreferenceListIDs.Remove(recipientID);
+                    var idOfOtherGuy = allPreferenceLists[recipientID].PreferenceListIDs[i];
+                    allPreferenceLists[idOfOtherGuy].PreferenceListIDs.Remove(recipientID);
                 }
 
                 // drop the bottom of the recipients list
