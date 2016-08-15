@@ -9,7 +9,7 @@ namespace ChessTD2.Tests
     public class ProposeShould
     {
         Standings standings;
-        Dictionary<int, PreferenceList> prefLists = new Dictionary<int, PreferenceList>();
+        Dictionary<int, PreferenceList> prefLists;
 
         [SetUp]
         public void Setup()
@@ -24,6 +24,7 @@ namespace ChessTD2.Tests
             standings.SectionPlayers.Add(new SectionPlayer { PlayerID = 007, Rating = 1600, RoundResults = new List<double> { 1 }, OpponentPlayerIDs = new List<int> { } });
             standings.SectionPlayers.Add(new SectionPlayer { PlayerID = 008, Rating = 1700, RoundResults = new List<double> { 1 }, OpponentPlayerIDs = new List<int> { } });
 
+            prefLists = new Dictionary<int, PreferenceList>();
             for (int i = 0; i < standings.SectionPlayers.Count(); i++)
             {
                 int id = standings.SectionPlayers.ElementAt(i).PlayerID;
@@ -36,6 +37,23 @@ namespace ChessTD2.Tests
         {
             Assert.AreEqual(standings.SectionPlayers.Count(), prefLists.Count());
             //standings.Propose(prefLists[001].PlayerID, prefLists[001].PreferenceListIDs.First(), prefLists);
+        }
+
+        [Test]
+        public void CorrectlyModifyRecipientListAfterFirstProposal()
+        {
+            var proposerID = 008;
+            var recipientID = prefLists[proposerID].PreferenceListIDs.First();
+
+            var listBefore = prefLists[recipientID].PreferenceListIDs;
+
+            standings.Propose(proposerID, recipientID, prefLists);
+
+            var listAfter = prefLists[recipientID].PreferenceListIDs;
+
+
+            Assert.AreNotEqual(listBefore, listAfter);
+            Assert.AreEqual(proposerID, listAfter.Last());
         }
     }
 }
