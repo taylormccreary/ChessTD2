@@ -176,12 +176,28 @@ namespace ChessTD2.console
         {
             var round = SectionPlayers.First().RoundResults.Count() + 1;
 
+            // if there's an odd amount of players, temporarily remove a player
+            SectionPlayer removedPlayer = new SectionPlayer();
+            bool oddPlayerExists = SectionPlayers.Count() % 2 != 0;
+            if (oddPlayerExists)
+            {
+                removedPlayer = SectionPlayers.Last();
+                SectionPlayers.Remove(SectionPlayers.Last());
+            }
+
+            // create preference lists that don't include the removed player, then add him back in
             var prefLists = new Dictionary<int, PreferenceList>();
             for (int i = 0; i < SectionPlayers.Count(); i++)
             {
                 int id = SectionPlayers.ElementAt(i).PlayerID;
                 prefLists.Add(id, GenerateIndividualPreferenceList(id));
             }
+
+            if (oddPlayerExists)
+            {
+                SectionPlayers.Add(removedPlayer);
+            }
+
 
             for (int i = 0; i < prefLists.Count(); i++)
             {
@@ -191,7 +207,7 @@ namespace ChessTD2.console
 
             var pairings = new List<Pairing> { };
 
-            while(prefLists.Count() > 1)
+            while (prefLists.Count() > 1)
             {
                 pairings.Add(new Pairing()
                 {

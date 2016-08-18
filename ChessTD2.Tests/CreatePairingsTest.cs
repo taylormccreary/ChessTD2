@@ -215,29 +215,29 @@ namespace ChessTD2.Tests
             [Test]
             public void GenerateCorrectPairings()
             {
-                Assert.That(pairings[0].WhitePlayerID == 16 || pairings[0].BlackPlayerID == 16);
-                Assert.That(pairings[0].WhitePlayerID == 8 || pairings[0].BlackPlayerID == 8);
+                Assert.That(pairings[0].WhitePlayerID == 17 || pairings[0].BlackPlayerID == 17);
+                Assert.That(pairings[0].WhitePlayerID == 9 || pairings[0].BlackPlayerID == 9);
 
-                Assert.That(pairings[1].WhitePlayerID == 15 || pairings[1].BlackPlayerID == 15);
-                Assert.That(pairings[1].WhitePlayerID == 7 || pairings[1].BlackPlayerID == 7);
+                Assert.That(pairings[1].WhitePlayerID == 16 || pairings[1].BlackPlayerID == 16);
+                Assert.That(pairings[1].WhitePlayerID == 8 || pairings[1].BlackPlayerID == 8);
 
-                Assert.That(pairings[2].WhitePlayerID == 14 || pairings[2].BlackPlayerID == 14);
-                Assert.That(pairings[2].WhitePlayerID == 6 || pairings[2].BlackPlayerID == 6);
+                Assert.That(pairings[2].WhitePlayerID == 15 || pairings[2].BlackPlayerID == 15);
+                Assert.That(pairings[2].WhitePlayerID == 7 || pairings[2].BlackPlayerID == 7);
 
-                Assert.That(pairings[3].WhitePlayerID == 13 || pairings[3].BlackPlayerID == 13);
-                Assert.That(pairings[3].WhitePlayerID == 5 || pairings[3].BlackPlayerID == 5);
+                Assert.That(pairings[3].WhitePlayerID == 14 || pairings[3].BlackPlayerID == 14);
+                Assert.That(pairings[3].WhitePlayerID == 6 || pairings[3].BlackPlayerID == 6);
 
-                Assert.That(pairings[4].WhitePlayerID == 12 || pairings[4].BlackPlayerID == 12);
-                Assert.That(pairings[4].WhitePlayerID == 4 || pairings[4].BlackPlayerID == 4);
+                Assert.That(pairings[4].WhitePlayerID == 13 || pairings[4].BlackPlayerID == 13);
+                Assert.That(pairings[4].WhitePlayerID == 5 || pairings[4].BlackPlayerID == 5);
 
-                Assert.That(pairings[5].WhitePlayerID == 11 || pairings[5].BlackPlayerID == 11);
-                Assert.That(pairings[5].WhitePlayerID == 3 || pairings[5].BlackPlayerID == 3);
+                Assert.That(pairings[5].WhitePlayerID == 12 || pairings[5].BlackPlayerID == 12);
+                Assert.That(pairings[5].WhitePlayerID == 4 || pairings[5].BlackPlayerID == 4);
 
-                Assert.That(pairings[6].WhitePlayerID == 10 || pairings[6].BlackPlayerID == 10);
-                Assert.That(pairings[6].WhitePlayerID == 2 || pairings[6].BlackPlayerID == 2);
+                Assert.That(pairings[6].WhitePlayerID == 11 || pairings[6].BlackPlayerID == 11);
+                Assert.That(pairings[6].WhitePlayerID == 3 || pairings[6].BlackPlayerID == 3);
 
-                Assert.That(pairings[7].WhitePlayerID == 9 || pairings[7].BlackPlayerID == 9);
-                Assert.That(pairings[7].WhitePlayerID == 1 || pairings[7].BlackPlayerID == 1);
+                Assert.That(pairings[7].WhitePlayerID == 10 || pairings[7].BlackPlayerID == 10);
+                Assert.That(pairings[7].WhitePlayerID == 2 || pairings[7].BlackPlayerID == 2);
             }
 
         }
