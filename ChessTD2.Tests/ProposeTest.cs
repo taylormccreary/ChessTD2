@@ -10,7 +10,7 @@ namespace ChessTD2.Tests
     {
 
         [TestFixture]
-        public class ForFirstRound
+        public class ForRound1
         {
 
             Standings standings;
@@ -133,7 +133,7 @@ namespace ChessTD2.Tests
         }
 
         [TestFixture]
-        public class ForSecondRound
+        public class ForRound2
         {
             Standings standings;
             Dictionary<int, PreferenceList> prefLists;
@@ -186,7 +186,7 @@ namespace ChessTD2.Tests
 
 
         [TestFixture]
-        public class ForThirdRound
+        public class ForRound3
         {
             Standings standings;
             Dictionary<int, PreferenceList> prefLists;
@@ -239,7 +239,7 @@ namespace ChessTD2.Tests
 
 
         [TestFixture]
-        public class ForFourthRound
+        public class ForRound4
         {
             Standings standings;
             Dictionary<int, PreferenceList> prefLists;

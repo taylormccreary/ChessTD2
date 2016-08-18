@@ -171,5 +171,10 @@ namespace ChessTD2.console
                 }
             }
         }
+
+        public List<Pairing> PairNextRound()
+        {
+            return new List<Pairing> { };
+        }
     }
 }
