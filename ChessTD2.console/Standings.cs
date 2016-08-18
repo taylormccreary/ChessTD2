@@ -172,9 +172,38 @@ namespace ChessTD2.console
             }
         }
 
-        public List<Pairing> CreatePairings(Dictionary<int, PreferenceList> prefLists)
+        public List<Pairing> CreatePairings()
         {
-            return new List<Pairing> { };
+            var round = SectionPlayers.First().RoundResults.Count() + 1;
+
+            var prefLists = new Dictionary<int, PreferenceList>();
+            for (int i = 0; i < SectionPlayers.Count(); i++)
+            {
+                int id = SectionPlayers.ElementAt(i).PlayerID;
+                prefLists.Add(id, GenerateIndividualPreferenceList(id));
+            }
+
+            for (int i = 0; i < prefLists.Count(); i++)
+            {
+                var proposerID = prefLists.ElementAt(i).Key;
+                Propose(proposerID, prefLists[proposerID].PreferenceListIDs.First(), prefLists);
+            }
+
+            var pairings = new List<Pairing> { };
+
+            while(prefLists.Count() > 1)
+            {
+                pairings.Add(new Pairing()
+                {
+                    WhitePlayerID = prefLists.First().Key,
+                    BlackPlayerID = prefLists.First().Value.PreferenceListIDs.First(),
+                    RoundNumber = round
+                });
+                prefLists.Remove(prefLists.First().Value.PreferenceListIDs.First());
+                prefLists.Remove(prefLists.First().Key);
+            }
+
+            return pairings;
         }
     }
 }

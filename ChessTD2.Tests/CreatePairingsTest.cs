@@ -37,13 +37,13 @@ namespace ChessTD2.Tests
         [Test]
         public void ReturnTheCorrectNumberOfPairings()
         {
-            Assert.AreEqual(standings.SectionPlayers.Count() / 2, standings.CreatePairings(prefLists).Count());
+            Assert.AreEqual(standings.SectionPlayers.Count() / 2, standings.CreatePairings().Count());
         }
 
         [Test]
         public void NotOverlapPairings()
         {
-            var pairings = standings.CreatePairings(prefLists);
+            var pairings = standings.CreatePairings();
             var pairedPlayers = new List<int> { };
             foreach (var pairing in pairings)
             {
@@ -53,21 +53,21 @@ namespace ChessTD2.Tests
             Assert.AreEqual(pairedPlayers.Count(), pairedPlayers.Distinct().Count());
         }
 
-        public int HigherStandingPlayerId(Pairing pairing)
+        public int HigherStandingPlayerId(int firstID, int secondID)
         {
-            var whitePlayer = standings.SectionPlayers.Where(p => p.PlayerID == pairing.WhitePlayerID).First();
-            var whiteIndexInStandings = standings.SectionPlayers.IndexOf(whitePlayer);
+            var firstPlayer = standings.SectionPlayers.Where(p => p.PlayerID == firstID).First();
+            var firstPlayerIndexInStandings = standings.SectionPlayers.IndexOf(firstPlayer);
 
-            var blackPlayer = standings.SectionPlayers.Where(p => p.PlayerID == pairing.BlackPlayerID).First();
-            var blackIndexInStandings = standings.SectionPlayers.IndexOf(blackPlayer);
+            var secondPlayer = standings.SectionPlayers.Where(p => p.PlayerID == secondID).First();
+            var secondPlayerIndexInStandings = standings.SectionPlayers.IndexOf(secondPlayer);
 
-            if(whiteIndexInStandings < blackIndexInStandings)
+            if(firstPlayerIndexInStandings < secondPlayerIndexInStandings)
             {
-                return pairing.WhitePlayerID;
+                return firstID;
             }
             else
             {
-                return pairing.BlackPlayerID;
+                return secondID;
             }
         }
 
@@ -75,12 +75,14 @@ namespace ChessTD2.Tests
         [Test]
         public void OrderPairingsByStandings()
         {
-            var pairings = standings.CreatePairings(prefLists);
+            var pairings = standings.CreatePairings();
             for (int i = 0; i < pairings.Count() - 1; i++)
             {
+                var highestInUpperPairing = HigherStandingPlayerId(pairings.ElementAt(i).WhitePlayerID, pairings.ElementAt(i).BlackPlayerID);
+                var highestInLowerPairing = HigherStandingPlayerId(pairings.ElementAt(i+1).WhitePlayerID, pairings.ElementAt(i+1).BlackPlayerID);
                 // check that the highest standing player in this pairing
                 // is higher standing than the highest in the next pairing
-                Assert.Greater(HigherStandingPlayerId(pairings.ElementAt(i)), HigherStandingPlayerId(pairings.ElementAt(i + 1)));
+                Assert.AreEqual(highestInUpperPairing, HigherStandingPlayerId(highestInUpperPairing, highestInLowerPairing));
             }
         }
 
