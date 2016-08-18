@@ -182,6 +182,7 @@ namespace ChessTD2.console
             if (oddPlayerExists)
             {
                 removedPlayer = SectionPlayers.Last();
+                removedPlayer.RoundResults.Add(PairingResult.)
                 SectionPlayers.Remove(SectionPlayers.Last());
             }
 

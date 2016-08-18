@@ -15,5 +15,5 @@ namespace ChessTD2.console
         public int RoundNumber { get; set; }
     }
     
-    public enum PairingResult { WhiteWins, BlackWins, Draw, Unknown }
+    public enum PairingResult { WhiteWins, BlackWins, Draw, FullPtBye, HalfPtBye, Unknown }
 }
