@@ -55,6 +55,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="AddRoundResultsTest.cs" />
+    <Compile Include="CreatePairingsTest.cs" />
     <Compile Include="GenerateIndividualPreferenceListTest.cs" />
     <Compile Include="PairTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

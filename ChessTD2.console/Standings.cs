@@ -172,7 +172,7 @@ namespace ChessTD2.console
             }
         }
 
-        public List<Pairing> PairNextRound()
+        public List<Pairing> CreatePairings(Dictionary<int, PreferenceList> prefLists)
         {
             return new List<Pairing> { };
         }
