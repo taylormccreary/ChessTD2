@@ -43,6 +43,7 @@ namespace ChessTD2.console
         {
             var currentPlayer = SectionPlayers.Where(sp => sp.PlayerID == id).First();
             var currentPlayerScore = currentPlayer.RoundResults.Sum();
+            var colorStatus = currentPlayer.CalculateColorStatus();
 
             // preference list is the the list of player groupings
             var currentPlayerPreferenceListGroupings = SectionPlayers
@@ -52,7 +53,8 @@ namespace ChessTD2.console
                     Rating = sp.Rating,
                     Score = sp.RoundResults.Sum(),
                     OpponentPlayerIDs = sp.OpponentPlayerIDs,
-                    RelativeScoreGroup = currentPlayerScore.CompareTo(sp.RoundResults.Sum())
+                    RelativeScoreGroup = currentPlayerScore.CompareTo(sp.RoundResults.Sum()),
+                    RelativeColorGroup = PotentialOpponentGroupings.CalculateRelativeColorGroup(colorStatus, sp.CalculateColorStatus())
                 })
                 // we need to keep the current player in the list to see which half of the score section he's in
                 //.Where(sp => sp.PlayerID != currentPlayer.PlayerID)
@@ -99,6 +101,7 @@ namespace ChessTD2.console
                 .Where(sp => sp.PlayerID != currentPlayer.PlayerID)
                 .OrderBy(p => p.OpponentGroup)
                 .ThenBy(p => p.RelativeScoreGroup)
+                .ThenBy(p => p.RelativeColorGroup)
                 .ThenBy(p => p.SameScoreGroupHalf)
                 .ThenByDescending(p => p.Score)
                 .ThenByDescending(p => p.Rating)
@@ -210,10 +213,52 @@ namespace ChessTD2.console
 
             while (prefLists.Count() > 1)
             {
+                var white = prefLists.First().Key;
+                var black = prefLists.First().Value.PreferenceListIDs.First();
+
+                if (SectionPlayers
+                        .Where(p => p.PlayerID == white)
+                        .First()
+                        .RoundColors
+                        .Sum()
+                        >
+                        SectionPlayers
+                        .Where(p => p.PlayerID == black)
+                        .First()
+                        .RoundColors
+                        .Sum())
+                {
+                    var temp = white;
+                    white = black;
+                    black = temp;
+                }
+                else if (SectionPlayers
+                        .Where(p => p.PlayerID == white)
+                        .First()
+                        .RoundColors
+                        .Sum()
+                        ==
+                        SectionPlayers
+                        .Where(p => p.PlayerID == black)
+                        .First()
+                        .RoundColors
+                        .Sum() &&
+                        SectionPlayers
+                        .Where(p => p.PlayerID == white)
+                        .First()
+                        .RoundColors
+                        .Last()
+                        ==
+                        1)
+                {
+                    var temp = white;
+                    white = black;
+                    black = temp;
+                }
                 pairings.Add(new Pairing()
                 {
-                    WhitePlayerID = prefLists.First().Key,
-                    BlackPlayerID = prefLists.First().Value.PreferenceListIDs.First(),
+                    WhitePlayerID = white,
+                    BlackPlayerID = black,
                     RoundNumber = round
                 });
                 prefLists.Remove(prefLists.First().Value.PreferenceListIDs.First());
