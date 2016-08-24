@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChessTD2.console
 {
@@ -124,55 +122,17 @@ namespace ChessTD2.console
 
         public void Propose(int proposerID, int recipientID, Dictionary<int, PreferenceList> allPreferenceLists)
         {
-            // check if proposer is in recipient's list
-            if (allPreferenceLists[proposerID].PreferenceListIDs.Contains(recipientID))
-            {
-                // check if the recipient has a current proposal
-                if (allPreferenceLists[recipientID].CurrentProposal != -1)
-                {
-                    // if he does, remove them from each others' lists and have that guy propose to his first choice
-                    var currProp = allPreferenceLists[recipientID].CurrentProposal;
-                    allPreferenceLists[currProp].PreferenceListIDs.Remove(recipientID);
-                    allPreferenceLists[recipientID].PreferenceListIDs.Remove(currProp);
-                    Propose(currProp, allPreferenceLists[currProp].PreferenceListIDs.First(), allPreferenceLists);
-                }
-
-                // set new current proposal of the recipient to the proposer
-                allPreferenceLists[recipientID].CurrentProposal = proposerID;
-
-                // find where proposer id is so we can drop everything after that
-                var idsBeforeAndIncludingProposer = allPreferenceLists[recipientID].PreferenceListIDs
-                    .IndexOf(proposerID)
-                    + 1;
-
-                // for all the ids we are about to drop, delete recipient id from their pref list
-                for (int i = idsBeforeAndIncludingProposer; i < allPreferenceLists[recipientID].PreferenceListIDs.Count(); i++)
-                {
-                    var idOfOtherGuy = allPreferenceLists[recipientID].PreferenceListIDs[i];
-                    allPreferenceLists[idOfOtherGuy].PreferenceListIDs.Remove(recipientID);
-                }
-
-                // drop the bottom of the recipients list
-                allPreferenceLists[recipientID].PreferenceListIDs = allPreferenceLists[recipientID].PreferenceListIDs
-                    .Take(idsBeforeAndIncludingProposer)
-                    .ToList();
-            }
-            // else remove recipient from proposer's list
-            else
+            if (allPreferenceLists[recipientID].CurrentProposal != -1)
             {
                 allPreferenceLists[proposerID].PreferenceListIDs.Remove(recipientID);
-
-                // have proposer propose to the next person on their list (the new first person)
-                if (allPreferenceLists[proposerID].PreferenceListIDs.Count() > 0)
-                {
-                    Propose(proposerID, allPreferenceLists[proposerID].PreferenceListIDs.First(), allPreferenceLists);
-
-                }
-                else
-                {
-                    throw new Exception("Preference list is empty");
-                }
+                Propose(proposerID, allPreferenceLists[proposerID].PreferenceListIDs.First(), allPreferenceLists);
             }
+            else
+            {
+                allPreferenceLists[recipientID].CurrentProposal = proposerID;
+                allPreferenceLists[recipientID].PreferenceListIDs = new List<int> { proposerID };
+            }
+
         }
 
         public List<Pairing> CreatePairings()
@@ -191,6 +151,7 @@ namespace ChessTD2.console
 
             // create preference lists that don't include the removed player, then add him back in
             var prefLists = new Dictionary<int, PreferenceList>();
+
             for (int i = 0; i < SectionPlayers.Count(); i++)
             {
                 int id = SectionPlayers.ElementAt(i).PlayerID;
@@ -220,7 +181,7 @@ namespace ChessTD2.console
                         .First();
 
                 var whiteColorStatus = prefLists[white].PreferredColor;
-          
+
 
                 var black = prefLists.First().Value.PreferenceListIDs.First();
                 var blackSectionPlayer = SectionPlayers
@@ -228,7 +189,7 @@ namespace ChessTD2.console
                         .First();
 
                 var blackColorStatus = prefLists[black].PreferredColor;
-                
+
                 // if they both want the same thing, rating determines color
                 if (whiteColorStatus == blackColorStatus)
                 {

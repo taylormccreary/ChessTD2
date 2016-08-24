@@ -29,6 +29,12 @@ namespace ChessTD2.Tests
                 standings.SectionPlayers.Add(new SectionPlayer { PlayerID = 007, Rating = 1600, RoundResults = new List<double> { }, OpponentPlayerIDs = new List<int> { } });
                 standings.SectionPlayers.Add(new SectionPlayer { PlayerID = 008, Rating = 1700, RoundResults = new List<double> { }, OpponentPlayerIDs = new List<int> { } });
 
+                standings.SectionPlayers = standings.SectionPlayers
+                    .OrderByDescending(p => p.RoundResults.Sum())
+                    .ThenByDescending(p => p.Rating)
+                    .ThenByDescending(p => p.PlayerID)
+                    .ToList();
+
                 prefLists = new Dictionary<int, PreferenceList>();
                 for (int i = 0; i < standings.SectionPlayers.Count(); i++)
                 {
@@ -60,75 +66,24 @@ namespace ChessTD2.Tests
                 Assert.AreEqual(proposerID, listAfter.Last());
                 Assert.AreEqual(1, listAfter.Count());
             }
+            
 
             [Test]
-            public void CorrectlyModifyListsAfterFirstHalfOfProposals()
+            public void GeneratesCorrectPreferenceLists()
             {
-                var recipientID8 = prefLists[008].PreferenceListIDs.First();
-                standings.Propose(8, recipientID8, prefLists);
-
-                var recipientID7 = prefLists[007].PreferenceListIDs.First();
-                standings.Propose(7, recipientID7, prefLists);
-
-                var recipientID6 = prefLists[006].PreferenceListIDs.First();
-                standings.Propose(6, recipientID6, prefLists);
-
-                var recipientID5 = prefLists[005].PreferenceListIDs.First();
-                standings.Propose(5, recipientID5, prefLists);
-
-                Assert.AreEqual(8, prefLists[recipientID8].PreferenceListIDs.Last());
-                Assert.AreEqual(1, prefLists[recipientID8].PreferenceListIDs.Count());
-
-                Assert.AreEqual(7, prefLists[recipientID7].PreferenceListIDs.Last());
-                Assert.AreEqual(2, prefLists[recipientID7].PreferenceListIDs.Count());
-
-                Assert.AreEqual(6, prefLists[recipientID6].PreferenceListIDs.Last());
-                Assert.AreEqual(3, prefLists[recipientID6].PreferenceListIDs.Count());
-
-                Assert.AreEqual(5, prefLists[recipientID5].PreferenceListIDs.Last());
-                Assert.AreEqual(4, prefLists[recipientID5].PreferenceListIDs.Count());
-
-            }
-
-            [Test]
-            public void CorrectlyModifyListsAfterSecondHalfOfProposals()
-            {
-                var recipientID8 = prefLists[008].PreferenceListIDs.First();
-                standings.Propose(8, recipientID8, prefLists);
-
-                var recipientID7 = prefLists[007].PreferenceListIDs.First();
-                standings.Propose(7, recipientID7, prefLists);
-
-                var recipientID6 = prefLists[006].PreferenceListIDs.First();
-                standings.Propose(6, recipientID6, prefLists);
-
-                var recipientID5 = prefLists[005].PreferenceListIDs.First();
-                standings.Propose(5, recipientID5, prefLists);
-
-                var recipientID4 = prefLists[004].PreferenceListIDs.First();
-                standings.Propose(4, recipientID8, prefLists);
-
-                var recipientID3 = prefLists[003].PreferenceListIDs.First();
-                standings.Propose(3, recipientID7, prefLists);
-
-                var recipientID2 = prefLists[002].PreferenceListIDs.First();
-                standings.Propose(2, recipientID6, prefLists);
-
-                var recipientID1 = prefLists[001].PreferenceListIDs.First();
-                standings.Propose(1, recipientID5, prefLists);
-
-                Assert.AreEqual(8, prefLists[recipientID8].PreferenceListIDs.Last());
-                Assert.AreEqual(recipientID8, prefLists[8].PreferenceListIDs.Last());
-
-                Assert.AreEqual(7, prefLists[recipientID7].PreferenceListIDs.Last());
-                Assert.AreEqual(recipientID7, prefLists[7].PreferenceListIDs.Last());
-
-                Assert.AreEqual(6, prefLists[recipientID6].PreferenceListIDs.Last());
-                Assert.AreEqual(recipientID6, prefLists[6].PreferenceListIDs.Last());
-
-                Assert.AreEqual(5, prefLists[recipientID5].PreferenceListIDs.Last());
-                Assert.AreEqual(recipientID5, prefLists[5].PreferenceListIDs.Last());
-
+                for (int i = 0; i < prefLists.Count(); i++)
+                {
+                    var proposerID = prefLists.ElementAt(i).Key;
+                    standings.Propose(proposerID, prefLists[proposerID].PreferenceListIDs.First(), prefLists);
+                }
+                Assert.AreEqual(new List<int> { 5 }, prefLists[1].PreferenceListIDs);
+                Assert.AreEqual(new List<int> { 6 }, prefLists[2].PreferenceListIDs);
+                Assert.AreEqual(new List<int> { 7 }, prefLists[3].PreferenceListIDs);
+                Assert.AreEqual(new List<int> { 8 }, prefLists[4].PreferenceListIDs);
+                Assert.AreEqual(new List<int> { 1 }, prefLists[5].PreferenceListIDs);
+                Assert.AreEqual(new List<int> { 2 }, prefLists[6].PreferenceListIDs);
+                Assert.AreEqual(new List<int> { 3 }, prefLists[7].PreferenceListIDs);
+                Assert.AreEqual(new List<int> { 4 }, prefLists[8].PreferenceListIDs);
             }
         }
 
@@ -274,7 +229,7 @@ namespace ChessTD2.Tests
             [Test]
             public void GeneratesCorrectPreferenceLists()
             {
-                for (int i = prefLists.Count() -1 ; i >= 0; i--)
+                for (int i = 0; i < prefLists.Count(); i++)
                 {
                     var proposerID = prefLists.ElementAt(i).Key;
                     standings.Propose(proposerID, prefLists[proposerID].PreferenceListIDs.First(), prefLists);
