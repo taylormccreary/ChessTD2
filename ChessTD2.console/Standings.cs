@@ -211,50 +211,65 @@ namespace ChessTD2.console
 
             var pairings = new List<Pairing> { };
 
+            bool higherPlayerGetsWhite = true;
             while (prefLists.Count() > 1)
             {
                 var white = prefLists.First().Key;
-                var black = prefLists.First().Value.PreferenceListIDs.First();
+                var whiteSectionPlayer = SectionPlayers
+                        .Where(p => p.PlayerID == white)
+                        .First();
 
-                if (SectionPlayers
-                        .Where(p => p.PlayerID == white)
-                        .First()
-                        .RoundColors
-                        .Sum()
-                        >
-                        SectionPlayers
+                var whiteColorStatus = prefLists[white].PreferredColor;
+          
+
+                var black = prefLists.First().Value.PreferenceListIDs.First();
+                var blackSectionPlayer = SectionPlayers
                         .Where(p => p.PlayerID == black)
-                        .First()
-                        .RoundColors
-                        .Sum())
+                        .First();
+
+                var blackColorStatus = prefLists[black].PreferredColor;
+                
+                // if they both want the same thing, rating determines color
+                if (whiteColorStatus == blackColorStatus)
+                {
+                    if (higherPlayerGetsWhite)
+                    {
+                        if (whiteSectionPlayer.Rating < blackSectionPlayer.Rating)
+                        {
+                            var temp = white;
+                            white = black;
+                            black = temp;
+                        }
+                    }
+                    else
+                    {
+                        if (whiteSectionPlayer.Rating > blackSectionPlayer.Rating)
+                        {
+                            var temp = white;
+                            white = black;
+                            black = temp;
+                        }
+                    }
+
+                    // alternate whether higher player gets white
+                    higherPlayerGetsWhite = !higherPlayerGetsWhite;
+                }
+                // if white wants black and black wants white, switch 'em
+                else if ((whiteColorStatus == ColorStatus.None || whiteColorStatus == ColorStatus.DueBlack || whiteColorStatus == ColorStatus.NeedsBlack) && (blackColorStatus == ColorStatus.None || blackColorStatus == ColorStatus.DueWhite || blackColorStatus == ColorStatus.NeedsWhite))
                 {
                     var temp = white;
                     white = black;
                     black = temp;
                 }
-                else if (SectionPlayers
-                        .Where(p => p.PlayerID == white)
-                        .First()
-                        .RoundColors
-                        .Sum()
-                        ==
-                        SectionPlayers
-                        .Where(p => p.PlayerID == black)
-                        .First()
-                        .RoundColors
-                        .Sum() &&
-                        SectionPlayers
-                        .Where(p => p.PlayerID == white)
-                        .First()
-                        .RoundColors
-                        .Last()
-                        ==
-                        1)
+                // if black needs white and white does not (or vice versa), switch 'em
+                else if (blackColorStatus == ColorStatus.NeedsWhite || whiteColorStatus == ColorStatus.NeedsBlack)
                 {
                     var temp = white;
                     white = black;
                     black = temp;
                 }
+                // otherwise, leave 'em
+
                 pairings.Add(new Pairing()
                 {
                     WhitePlayerID = white,

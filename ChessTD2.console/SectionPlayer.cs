@@ -18,7 +18,7 @@ namespace ChessTD2.console
         public ColorStatus CalculateColorStatus()
         {
             
-            if (RoundColors.Count() == 0)
+            if (RoundColors == null || RoundColors.Count() == 0)
             {
                 return ColorStatus.None;
             }
