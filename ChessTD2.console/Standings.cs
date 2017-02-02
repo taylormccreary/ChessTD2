@@ -9,6 +9,16 @@ namespace ChessTD2.console
 
         public List<SectionPlayer> SectionPlayers { get; set; }
 
+        // sorts standings in order to pair again
+        public void Refresh()
+        {
+            SectionPlayers = SectionPlayers
+                .OrderByDescending(p => p.RoundResults.Sum())
+                .ThenByDescending(p => p.Rating)
+                .ThenByDescending(p => p.PlayerID)
+                .ToList();
+        }
+
         public void AddRoundResults(List<Pairing> round)
         {
             foreach (var pairing in round)
@@ -137,6 +147,9 @@ namespace ChessTD2.console
 
         public List<Pairing> CreatePairings()
         {
+            // first, Refresh, so that the proposals happen in the right order
+            Refresh();
+
             var round = SectionPlayers.First().RoundResults.Count() + 1;
 
             // if there's an odd amount of players, temporarily remove a player
