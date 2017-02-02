@@ -131,6 +131,7 @@ namespace ChessTD2.Tests
             Standings standings;
             List<Pairing> pairings;
 
+            // takes two IDs, returns ID of player with higher standing
             public int HigherStandingPlayerId(int firstID, int secondID)
             {
                 var firstPlayer = standings.SectionPlayers.Where(p => p.PlayerID == firstID).First();
@@ -152,6 +153,7 @@ namespace ChessTD2.Tests
             [SetUp]
             public void Setup()
             {
+                // creates SectionPlayers, puts them into standings, then performs initial sort
                 standings = new Standings { SectionPlayers = new List<SectionPlayer>() };
                 for (int i = 1; i <= 17; i++)
                 {
@@ -164,6 +166,7 @@ namespace ChessTD2.Tests
                     .ThenByDescending(p => p.PlayerID)
                     .ToList();
 
+                // creates initial pairings
                 pairings = standings.CreatePairings();
             }
 
@@ -187,6 +190,7 @@ namespace ChessTD2.Tests
             }
 
             [Test]
+            // checks that each player ID appears only once in the pairings
             public void NotOverlapPairings()
             {
                 var pairedPlayers = new List<int> { };
