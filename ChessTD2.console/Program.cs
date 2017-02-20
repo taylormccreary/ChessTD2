@@ -31,6 +31,22 @@ namespace ChessTD2.console
             pairings = standings.CreatePairings();
 
             PrintPairings(pairings);
+            standings.AddRoundResults(pairings);
+            pairings = standings.CreatePairings();
+
+            PrintPairings(pairings);
+            standings.AddRoundResults(pairings);
+            pairings = standings.CreatePairings();
+
+            PrintPairings(pairings);
+            standings.AddRoundResults(pairings);
+            pairings = standings.CreatePairings();
+
+            PrintPairings(pairings);
+            standings.AddRoundResults(pairings);
+            pairings = standings.CreatePairings();
+
+            PrintPairings(pairings);
 
             Console.ReadKey();
         }
