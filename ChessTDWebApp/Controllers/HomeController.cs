@@ -8,7 +8,7 @@ namespace ChessTDWebApp.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Home()
+        public ActionResult Index()
         {
             return View();
         }
