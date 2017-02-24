@@ -35,7 +35,7 @@ namespace ChessTDWebApp.Tests.Controllers
             ViewResult result = controller.About() as ViewResult;
 
             // Assert
-            Assert.AreEqual("Your application description page.", result.ViewBag.Message);
+            Assert.AreEqual("An Application for Chess Tournament Directors.", result.ViewBag.Message);
         }
 
         [TestMethod]
