@@ -15,7 +15,7 @@ namespace ChessTDWebApp.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "An Application for Chess Tournament Directors.";
 
             return View();
         }
