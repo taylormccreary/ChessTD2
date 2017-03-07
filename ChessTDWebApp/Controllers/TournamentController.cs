@@ -11,8 +11,8 @@ namespace ChessTDWebApp.Controllers
         {
             List<SectionPlayer> sPlayers = CreatePlayers();
             SectionPlayer p = new SectionPlayer { PlayerID = 001, Rating = 1000, RoundResults = new List<double> { } };
-            ViewBag.Player = p;
-            return View();
+            //ViewBag.Player = p;
+            return View(p);
         }
 
         public List<SectionPlayer> CreatePlayers()

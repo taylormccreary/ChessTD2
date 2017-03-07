@@ -1,4 +1,6 @@
-﻿@{
+﻿@model ChessTD2.console.SectionPlayer
+
+@{
     ViewBag.Title = "Index";
 }
 
@@ -26,7 +28,7 @@
                     <tr>
                         <th>Board</th>
                         <th>Name</th>
-                        <th>@ViewBag.Player.Rating</th>
+                        <th>@Model.Rating</th>
                         <th>Pts</th>
                         <th>Result</th>
                         <th>No</th>
